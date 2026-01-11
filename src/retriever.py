@@ -1,9 +1,12 @@
 from typing import List, Dict, Any, Optional
-from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain.docstore.document import Document
 from langchain.schema.retriever import BaseRetriever
 from langchain.callbacks.manager import CallbackManagerForRetrieverRun
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent))
 from config import Config
 
 class CloneDetectionRetriever(BaseRetriever):
@@ -11,11 +14,14 @@ class CloneDetectionRetriever(BaseRetriever):
     
     def __init__(self, vector_store: Chroma, top_k: int = Config.TOP_K_RETRIEVAL):
         super().__init__()
+        import torch
         self.vector_store = vector_store
         self.top_k = top_k
-        self.embeddings = OpenAIEmbeddings(
-            openai_api_key=Config.OPENAI_API_KEY,
-            openai_api_base=Config.OPENAI_BASE_URL
+        device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        self.embeddings = HuggingFaceEmbeddings(
+            model_name="BAAI/bge-small-zh-v1.5",
+            model_kwargs={'device': device},
+            encode_kwargs={'normalize_embeddings': True}
         )
     
     def _get_relevant_documents(
@@ -78,16 +84,19 @@ class RetrieverManager:
     def load_vector_store(self) -> bool:
         """加载已存在的向量数据库"""
         try:
+            import torch
+            device = 'cuda' if torch.cuda.is_available() else 'cpu'
+            embeddings = HuggingFaceEmbeddings(
+                model_name="BAAI/bge-small-zh-v1.5",
+                model_kwargs={'device': device},
+                encode_kwargs={'normalize_embeddings': True}
+            )
             self.vector_store = Chroma(
                 persist_directory=Config.CHROMA_PERSIST_DIRECTORY,
-                embedding_function=OpenAIEmbeddings(
-                    model="text-embedding-ada-002",
-                    openai_api_key=Config.OPENAI_API_KEY,
-                    openai_api_base=Config.OPENAI_BASE_URL
-                )
+                embedding_function=embeddings
             )
             self.retriever = CloneDetectionRetriever(self.vector_store)
-            print("向量数据库加载成功")
+            print(f"向量数据库加载成功 (设备: {device})")
             return True
         except Exception as e:
             print(f"加载向量数据库失败: {e}")
@@ -174,3 +183,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

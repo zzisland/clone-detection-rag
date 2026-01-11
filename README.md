@@ -61,7 +61,6 @@
 ### 环境要求
 
 - Python 3.8 或更高版本
-- OpenAI API Key
 
 ### 安装步骤
 
@@ -83,8 +82,6 @@ pip install -r requirements.txt
 创建 `.env` 文件并添加以下内容：
 
 ```env
-OPENAI_API_KEY=your_openai_api_key_here
-OPENAI_BASE_URL=https://api.openai.com/v1
 CHROMA_PERSIST_DIRECTORY=./data/chroma
 CHUNK_SIZE=1000
 CHUNK_OVERLAP=200
@@ -285,8 +282,6 @@ python diagnose.py
 
 | 变量名 | 说明 | 默认值 |
 |--------|------|--------|
-| `OPENAI_API_KEY` | OpenAI API 密钥 | 必填 |
-| `OPENAI_BASE_URL` | API 基础 URL | `https://api.openai.com/v1` |
 | `CHROMA_PERSIST_DIRECTORY` | 向量数据库路径 | `./data/chroma` |
 | `CHUNK_SIZE` | 文档分块大小 | `1000` |
 | `CHUNK_OVERLAP` | 分块重叠大小 | `200` |
@@ -297,11 +292,7 @@ python diagnose.py
 在 `src/rag.py` 中可以修改：
 
 ```python
-self.llm = ChatOpenAI(
-    model="gpt-3.5-turbo",  # 可改为 gpt-4
-    temperature=0.1,         # 控制随机性
-    ...
-)
+model_name = "Qwen/Qwen2.5-Coder-1.5B-Instruct"  # 或 "Qwen/Qwen2.5-Coder-7B-Instruct"
 ```
 
 ## 🤝 贡献指南
@@ -341,11 +332,11 @@ A: Streamlit 应用必须通过 `streamlit run` 命令启动，直接用 `python
 
 ### Q: 如何更换 LLM 模型？
 
-A: 在 `src/rag.py` 中修改 `ChatOpenAI` 的 `model` 参数。
+A: 在 `src/rag.py` 中修改 `model_name` 变量。
 
 ### Q: 数据摄取失败怎么办？
 
-A: 运行 `python diagnose.py` 检查环境，确保所有依赖已安装且 API Key 正确。
+A: 运行 `python diagnose.py` 检查环境，确保所有依赖已安装。
 
 ### Q: 如何添加自己的文档？
 
@@ -360,7 +351,7 @@ A: 将文档放入 `data/` 对应的子目录，然后点击"重新摄取数据"
 - [LangChain](https://www.langchain.com/) - RAG 框架
 - [Streamlit](https://streamlit.io/) - Web 框架
 - [ChromaDB](https://www.trychroma.com/) - 向量数据库
-- [OpenAI](https://openai.com/) - LLM 服务
+- [Qwen](https://huggingface.co/Qwen) - 开源代码模型
 
 ## 📧 联系方式
 

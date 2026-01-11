@@ -4,10 +4,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Config:
-    # API配置
-    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-    OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
-    
     # 向量数据库配置
     CHROMA_PERSIST_DIRECTORY = os.getenv("CHROMA_PERSIST_DIRECTORY", "./data/chroma")
     

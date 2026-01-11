@@ -7,8 +7,10 @@ from bs4 import BeautifulSoup
 import markdown
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.docstore.document import Document
-from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
+import sys
+sys.path.insert(0, str(Path(__file__).parent))
 from config import Config
 
 class DocumentProcessor:
@@ -97,11 +99,15 @@ class DataIngestor:
     
     def __init__(self):
         self.processor = DocumentProcessor()
-        self.embeddings = OpenAIEmbeddings(
-            model="text-embedding-ada-002",
-            openai_api_key=Config.OPENAI_API_KEY,
-            openai_api_base=Config.OPENAI_BASE_URL
+        # 使用 HuggingFace 的中文 Embedding 模型
+        import torch
+        device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        self.embeddings = HuggingFaceEmbeddings(
+            model_name="BAAI/bge-small-zh-v1.5",  # 中文向量模型，轻量高效
+            model_kwargs={'device': device},
+            encode_kwargs={'normalize_embeddings': True}
         )
+        print(f"Embedding 模型加载完成: BAAI/bge-small-zh-v1.5 (设备: {device})")
     
     def load_documents_from_directory(self, directory: str) -> List[Document]:
         """从目录加载所有文档"""
@@ -186,3 +192,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

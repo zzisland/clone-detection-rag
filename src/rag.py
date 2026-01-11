@@ -1,12 +1,23 @@
 from typing import List, Dict, Any, Optional
-from langchain_community.llms import OpenAI
-from langchain_openai import ChatOpenAI
+from langchain_community.llms import HuggingFacePipeline
 from langchain.prompts import PromptTemplate, ChatPromptTemplate
 from langchain.chains import LLMChain, RetrievalQA
 from langchain.schema import BaseOutputParser
 from langchain.memory import ConversationBufferMemory
+from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
+import torch
+import os
+import sys
+from pathlib import Path
+
+# 添加当前目录到路径
+sys.path.insert(0, str(Path(__file__).parent))
+
 from retriever import RetrieverManager
 from config import Config
+
+# 配置 HuggingFace 镜像加速下载
+os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
 
 class CloneDetectionOutputParser(BaseOutputParser):
     """专门用于克隆检测问答的输出解析器"""
@@ -27,12 +38,67 @@ class CloneDetectionRAG:
     
     def __init__(self):
         self.retriever_manager = RetrieverManager()
-        self.llm = ChatOpenAI(
-            model="gpt-3.5-turbo",
-            temperature=0.1,
-            openai_api_key=Config.OPENAI_API_KEY,
-            openai_api_base=Config.OPENAI_BASE_URL
+        
+        # 从 HuggingFace 加载 Qwen-2.5-Coder 模型
+        # 可选: "Qwen/Qwen2.5-Coder-1.5B-Instruct" (更快) 或 "Qwen/Qwen2.5-Coder-7B-Instruct" (更强)
+        model_name = "Qwen/Qwen2.5-Coder-1.5B-Instruct"  # 使用 1.5B 版本，加载更快
+        
+        print(f"正在加载模型: {model_name}...")
+        print("提示: 首次加载需要下载模型，使用国内镜像加速中...")
+        
+        # 检测设备
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        
+        # 加载 tokenizer 和模型（添加进度提示）
+        print("  [1/3] 加载 Tokenizer...")
+        self.tokenizer = AutoTokenizer.from_pretrained(
+            model_name,
+            trust_remote_code=True,
+            mirror='https://hf-mirror.com'  # 使用镜像
         )
+        
+        # 根据设备选择不同的加载方式
+        print("  [2/3] 加载模型权重...")
+        if device == "cuda":
+            self.model = AutoModelForCausalLM.from_pretrained(
+                model_name,
+                torch_dtype=torch.float16,
+                trust_remote_code=True,
+                low_cpu_mem_usage=True,  # 减少 CPU 内存占用
+                mirror='https://hf-mirror.com'  # 使用镜像
+            ).to(device)
+        else:
+            self.model = AutoModelForCausalLM.from_pretrained(
+                model_name,
+                torch_dtype=torch.float32,
+                trust_remote_code=True,
+                low_cpu_mem_usage=True,
+                mirror='https://hf-mirror.com'  # 使用镜像
+            )
+        
+        print("  [3/3] 创建推理 Pipeline...")
+        
+        # 创建 pipeline
+        pipe = pipeline(
+            "text-generation",
+            model=self.model,
+            tokenizer=self.tokenizer,
+            max_new_tokens=512,
+            temperature=0.1,
+            top_p=0.95,
+            repetition_penalty=1.1,
+            device=0 if device == "cuda" else -1
+        )
+        
+        # 创建 LangChain LLM
+        self.llm = HuggingFacePipeline(pipeline=pipe)
+        
+        print(f"✅ 模型加载完成！使用设备: {device.upper()}")
+        if device == "cuda":
+            # 显示显存使用情况
+            allocated = torch.cuda.memory_allocated(0) / 1024**3
+            print(f"   GPU 显存占用: {allocated:.2f} GB")
+        
         self.memory = ConversationBufferMemory(
             memory_key="chat_history",
             return_messages=True

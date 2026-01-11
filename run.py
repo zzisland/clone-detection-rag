@@ -19,7 +19,7 @@ def check_requirements():
     # 检查必要的包
     required_packages = [
         'streamlit', 'langchain', 'chromadb', 
-        'openai', 'dotenv'
+        'transformers', 'torch', 'sentence_transformers', 'dotenv'
     ]
     
     missing_packages = []
@@ -49,20 +49,10 @@ def check_config():
             print("正在创建.env文件...")
             import shutil
             shutil.copy('.env.example', '.env')
-            print("✅ 已创建.env文件，请编辑并添加你的API Key")
-            return False
+            print("✅ 已创建.env文件")
         else:
             print("❌ 未找到.env.example文件")
             return False
-    
-    # 检查API Key
-    from dotenv import load_dotenv
-    load_dotenv()
-    
-    api_key = os.getenv('OPENAI_API_KEY')
-    if not api_key or api_key == 'your_openai_api_key_here':
-        print("❌ 请在.env文件中设置有效的OPENAI_API_KEY")
-        return False
     
     print("✅ 配置文件检查通过")
     return True
