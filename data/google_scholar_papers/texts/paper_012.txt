@@ -1,0 +1,15 @@
+# Model Clone Detection in Practice
+
+**作者**: Model Clone, Florian Deissenboeck, Benjamin Hummel
+**年份**: 2023
+**会议**: ICSE’08
+**关键词**: Clone Detection, Data-Flow Models
+
+## 摘要
+Cloned code is considered harmful for two reasons: (1) mul- tiple, possibly unnecessary, duplicates of code increase main- tenance costs and, (2) inconsistent changes to cloned code can create faults and, hence, lead to incorrect program be- havior. Likewise, duplicated parts of models are problem- atic in model-based development. Recently, we and other authors proposed multiple approaches to automatically iden- tify duplicates in graphical models. While it has been demon- strated that these approaches work in principal, a number of challenges remain for application in industrial practice. Based on an industrial case study undertaken with the BMW Group, this paper details on these challenges and presents solutions to the most pressing ones, namely scalability and relevance of the results. Moreover, we present tool support that eases the evaluation of detection results and thereby helps to make clone detection a standard technique in model- based quality assurance. Categories and Subjec...
+
+## 链接
+- 论文链接: file://F:\clone-detection-rag\CloneDetection paper\Code_clone_detection_in_practice.pdf
+
+---
+*处理时间: 2026-01-11 21:32:46*

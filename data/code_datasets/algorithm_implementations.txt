@@ -1,0 +1,861 @@
+# 算法实现数据集
+
+## 经典算法的多种实现对比
+
+### 排序算法实现对比
+
+**Q1: 快速排序的不同实现方式**
+A1: 快速排序有多种实现方式，每种都有其特点：
+
+标准实现（递归版本）：
+```python
+def quick_sort_standard(arr):
+    """标准快速排序实现"""
+    if len(arr) <= 1:
+        return arr
+    
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    
+    return quick_sort_standard(left) + middle + quick_sort_standard(right)
+
+# 测试
+arr = [3, 6, 8, 10, 1, 2, 1]
+print(quick_sort_standard(arr))  # [1, 1, 2, 3, 6, 8, 10]
+```
+
+原地实现（空间优化）：
+```python
+def quick_sort_inplace(arr, low=0, high=None):
+    """原地快速排序，空间复杂度O(log n)"""
+    if high is None:
+        high = len(arr) - 1
+    
+    if low < high:
+        pi = partition(arr, low, high)
+        quick_sort_inplace(arr, low, pi - 1)
+        quick_sort_inplace(arr, pi + 1, high)
+
+def partition(arr, low, high):
+    """分区函数"""
+    pivot = arr[high]
+    i = low - 1
+    
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+    
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1
+
+# 测试
+arr = [3, 6, 8, 10, 1, 2, 1]
+quick_sort_inplace(arr)
+print(arr)  # [1, 1, 2, 3, 6, 8, 10]
+```
+
+三路快排（处理重复元素）：
+```python
+def quick_sort_three_way(arr, low=0, high=None):
+    """三路快速排序，优化重复元素处理"""
+    if high is None:
+        high = len(arr) - 1
+    
+    if low >= high:
+        return
+    
+    lt, gt = low, high
+    pivot = arr[low]
+    i = low + 1
+    
+    while i <= gt:
+        if arr[i] < pivot:
+            arr[lt], arr[i] = arr[i], arr[lt]
+            lt += 1
+            i += 1
+        elif arr[i] > pivot:
+            arr[i], arr[gt] = arr[gt], arr[i]
+            gt -= 1
+        else:
+            i += 1
+    
+    quick_sort_three_way(arr, low, lt - 1)
+    quick_sort_three_way(arr, gt + 1, high)
+
+# 测试
+arr = [3, 6, 8, 10, 1, 2, 1, 1, 6]
+quick_sort_three_way(arr)
+print(arr)  # [1, 1, 1, 2, 3, 6, 6, 8, 10]
+```
+
+**Q2: 归并排序的迭代实现**
+A2: 归并排序除了递归实现，还有迭代实现：
+
+递归实现：
+```python
+def merge_sort_recursive(arr):
+    """递归归并排序"""
+    if len(arr) <= 1:
+        return arr
+    
+    mid = len(arr) // 2
+    left = merge_sort_recursive(arr[:mid])
+    right = merge_sort_recursive(arr[mid:])
+    
+    return merge(left, right)
+
+def merge(left, right):
+    """合并两个有序数组"""
+    result = []
+    i = j = 0
+    
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
+```
+
+迭代实现：
+```python
+def merge_sort_iterative(arr):
+    """迭代归并排序，空间复杂度O(n)"""
+    n = len(arr)
+    curr_size = 1
+    
+    while curr_size < n:
+        for left_start in range(0, n, 2 * curr_size):
+            mid = min(left_start + curr_size, n)
+            right_end = min(left_start + 2 * curr_size, n)
+            
+            if mid < right_end:
+                merge_in_place(arr, left_start, mid, right_end)
+        
+        curr_size *= 2
+
+def merge_in_place(arr, left, mid, right):
+    """原地合并"""
+    left_part = arr[left:mid]
+    right_part = arr[mid:right]
+    
+    i = j = 0
+    k = left
+    
+    while i < len(left_part) and j < len(right_part):
+        if left_part[i] <= right_part[j]:
+            arr[k] = left_part[i]
+            i += 1
+        else:
+            arr[k] = right_part[j]
+            j += 1
+        k += 1
+    
+    while i < len(left_part):
+        arr[k] = left_part[i]
+        i += 1
+        k += 1
+    
+    while j < len(right_part):
+        arr[k] = right_part[j]
+        j += 1
+        k += 1
+```
+
+### 搜索算法实现对比
+
+**Q3: 二分搜索的不同变体**
+A3: 二分搜索有多种变体，适用于不同场景：
+
+标准二分搜索：
+```python
+def binary_search_standard(arr, target):
+    """标准二分搜索，返回索引或-1"""
+    left, right = 0, len(arr) - 1
+    
+    while left <= right:
+        mid = left + (right - left) // 2
+        
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    
+    return -1
+
+# 测试
+arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+print(binary_search_standard(arr, 6))  # 5
+print(binary_search_standard(arr, 11)) # -1
+```
+
+查找第一个等于目标的位置：
+```python
+def binary_search_first(arr, target):
+    """查找第一个等于目标的位置"""
+    left, right = 0, len(arr) - 1
+    result = -1
+    
+    while left <= right:
+        mid = left + (right - left) // 2
+        
+        if arr[mid] == target:
+            result = mid
+            right = mid - 1  # 继续向左查找
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    
+    return result
+
+# 测试
+arr = [1, 2, 2, 2, 3, 4, 5]
+print(binary_search_first(arr, 2))  # 1
+```
+
+查找最后一个等于目标的位置：
+```python
+def binary_search_last(arr, target):
+    """查找最后一个等于目标的位置"""
+    left, right = 0, len(arr) - 1
+    result = -1
+    
+    while left <= right:
+        mid = left + (right - left) // 2
+        
+        if arr[mid] == target:
+            result = mid
+            left = mid + 1  # 继续向右查找
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    
+    return result
+
+# 测试
+arr = [1, 2, 2, 2, 3, 4, 5]
+print(binary_search_last(arr, 2))  # 3
+```
+
+查找第一个大于等于目标的位置：
+```python
+def binary_search_lower_bound(arr, target):
+    """查找第一个大于等于目标的位置（下界）"""
+    left, right = 0, len(arr)
+    
+    while left < right:
+        mid = left + (right - left) // 2
+        
+        if arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid
+    
+    return left
+
+# 测试
+arr = [1, 2, 2, 2, 3, 4, 5]
+print(binary_search_lower_bound(arr, 2))  # 1
+print(binary_search_lower_bound(arr, 6))  # 7
+```
+
+### 动态规划算法对比
+
+**Q4: 背包问题的不同解法**
+A4: 0-1背包问题有多种解法：
+
+动态规划解法：
+```python
+def knapsack_01_dp(weights, values, capacity):
+    """0-1背包问题动态规划解法"""
+    n = len(weights)
+    dp = [[0] * (capacity + 1) for _ in range(n + 1)]
+    
+    for i in range(1, n + 1):
+        for w in range(capacity + 1):
+            if weights[i-1] <= w:
+                dp[i][w] = max(
+                    dp[i-1][w],  # 不选第i个物品
+                    dp[i-1][w-weights[i-1]] + values[i-1]  # 选第i个物品
+                )
+            else:
+                dp[i][w] = dp[i-1][w]
+    
+    return dp[n][capacity]
+
+# 空间优化版本
+def knapsack_01_optimized(weights, values, capacity):
+    """空间优化的0-1背包问题解法"""
+    n = len(weights)
+    dp = [0] * (capacity + 1)
+    
+    for i in range(n):
+        for w in range(capacity, weights[i] - 1, -1):
+            dp[w] = max(dp[w], dp[w - weights[i]] + values[i])
+    
+    return dp[capacity]
+
+# 测试
+weights = [2, 3, 4, 5]
+values = [3, 4, 5, 6]
+capacity = 5
+print(knapsack_01_dp(weights, values, capacity))      # 7
+print(knapsack_01_optimized(weights, values, capacity)) # 7
+```
+
+回溯解法：
+```python
+def knapsack_01_backtrack(weights, values, capacity):
+    """0-1背包问题回溯解法"""
+    n = len(weights)
+    max_value = 0
+    
+    def backtrack(index, current_weight, current_value):
+        nonlocal max_value
+        
+        if index == n or current_weight >= capacity:
+            max_value = max(max_value, current_value)
+            return
+        
+        # 不选当前物品
+        backtrack(index + 1, current_weight, current_value)
+        
+        # 选当前物品（如果不超过容量）
+        if current_weight + weights[index] <= capacity:
+            backtrack(index + 1, current_weight + weights[index], 
+                      current_value + values[index])
+    
+    backtrack(0, 0, 0)
+    return max_value
+```
+
+**Q5: 最长公共子序列的不同优化**
+A5: LCS问题的不同实现：
+
+标准动态规划：
+```python
+def lcs_standard(text1, text2):
+    """标准LCS动态规划解法"""
+    m, n = len(text1), len(text2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if text1[i-1] == text2[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    
+    return dp[m][n]
+```
+
+空间优化版本：
+```python
+def lcs_optimized(text1, text2):
+    """空间优化的LCS解法"""
+    if len(text1) < len(text2):
+        text1, text2 = text2, text1
+    
+    m, n = len(text1), len(text2)
+    dp = [0] * (n + 1)
+    
+    for i in range(1, m + 1):
+        prev = 0
+        for j in range(1, n + 1):
+            temp = dp[j]
+            if text1[i-1] == text2[j-1]:
+                dp[j] = prev + 1
+            else:
+                dp[j] = max(dp[j], dp[j-1])
+            prev = temp
+    
+    return dp[n]
+```
+
+带路径回溯：
+```python
+def lcs_with_path(text1, text2):
+    """带回溯路径的LCS解法"""
+    m, n = len(text1), len(text2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    
+    # 填充DP表
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if text1[i-1] == text2[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    
+    # 回溯构建LCS
+    lcs = []
+    i, j = m, n
+    while i > 0 and j > 0:
+        if text1[i-1] == text2[j-1]:
+            lcs.append(text1[i-1])
+            i -= 1
+            j -= 1
+        elif dp[i-1][j] > dp[i][j-1]:
+            i -= 1
+        else:
+            j -= 1
+    
+    return ''.join(reversed(lcs))
+```
+
+### 图算法实现对比
+
+**Q6: Dijkstra算法的不同实现**
+A6: Dijkstra算法有多种实现方式：
+
+优先队列实现：
+```python
+import heapq
+
+def dijkstra_priority_queue(graph, start):
+    """使用优先队列的Dijkstra算法"""
+    distances = {node: float('inf') for node in graph}
+    distances[start] = 0
+    previous = {node: None for node in graph}
+    pq = [(0, start)]
+    
+    while pq:
+        current_distance, current_node = heapq.heappop(pq)
+        
+        if current_distance > distances[current_node]:
+            continue
+        
+        for neighbor, weight in graph[current_node].items():
+            distance = current_distance + weight
+            
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                previous[neighbor] = current_node
+                heapq.heappush(pq, (distance, neighbor))
+    
+    return distances, previous
+```
+
+简单实现：
+```python
+def dijkstra_simple(graph, start):
+    """简单实现的Dijkstra算法"""
+    distances = {node: float('inf') for node in graph}
+    distances[start] = 0
+    visited = set()
+    unvisited = set(graph.keys())
+    
+    while unvisited:
+        current = min(unvisited, key=lambda node: distances[node])
+        unvisited.remove(current)
+        visited.add(current)
+        
+        for neighbor, weight in graph[current].items():
+            if neighbor in visited:
+                continue
+            
+            new_distance = distances[current] + weight
+            if new_distance < distances[neighbor]:
+                distances[neighbor] = new_distance
+    
+    return distances
+```
+
+**Q7: 深度优先搜索的不同应用**
+A7: DFS在不同场景中的应用：
+
+标准DFS：
+```python
+def dfs_standard(graph, start, visited=None):
+    """标准深度优先搜索"""
+    if visited is None:
+        visited = set()
+    
+    visited.add(start)
+    print(start, end=' ')
+    
+    for neighbor in graph[start]:
+        if neighbor not in visited:
+            dfs_standard(graph, neighbor, visited)
+```
+
+DFS找连通分量：
+```python
+def dfs_connected_components(graph):
+    """使用DFS找连通分量"""
+    visited = set()
+    components = []
+    
+    def dfs(node, component):
+        visited.add(node)
+        component.append(node)
+        
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                dfs(neighbor, component)
+    
+    for node in graph:
+        if node not in visited:
+            component = []
+            dfs(node, component)
+            components.append(component)
+    
+    return components
+```
+
+DFS检测环：
+```python
+def dfs_detect_cycle(graph):
+    """使用DFS检测图中的环"""
+    visited = set()
+    recursion_stack = set()
+    
+    def dfs(node):
+        visited.add(node)
+        recursion_stack.add(node)
+        
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                if dfs(neighbor):
+                    return True
+            elif neighbor in recursion_stack:
+                return True
+        
+        recursion_stack.remove(node)
+        return False
+    
+    for node in graph:
+        if node not in visited:
+            if dfs(node):
+                return True
+    
+    return False
+```
+
+### 数据结构实现对比
+
+**Q8: 二叉搜索树的不同平衡策略**
+A8: BST的不同平衡实现：
+
+标准BST：
+```python
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class BST:
+    def __init__(self):
+        self.root = None
+    
+    def insert(self, val):
+        self.root = self._insert(self.root, val)
+    
+    def _insert(self, node, val):
+        if not node:
+            return TreeNode(val)
+        
+        if val < node.val:
+            node.left = self._insert(node.left, val)
+        elif val > node.val:
+            node.right = self._insert(node.right, val)
+        
+        return node
+```
+
+AVL树（自平衡二叉搜索树）：
+```python
+class AVLNode:
+    def __init__(self, val=0, left=None, right=None, height=1):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.height = height
+
+class AVLTree:
+    def __init__(self):
+        self.root = None
+    
+    def insert(self, val):
+        self.root = self._insert(self.root, val)
+    
+    def _insert(self, node, val):
+        if not node:
+            return AVLNode(val)
+        
+        if val < node.val:
+            node.left = self._insert(node.left, val)
+        elif val > node.val:
+            node.right = self._insert(node.right, val)
+        else:
+            return node  # 不允许重复值
+        
+        # 更新高度
+        node.height = 1 + max(self._get_height(node.left), 
+                              self._get_height(node.right))
+        
+        # 检查平衡因子
+        balance = self._get_balance(node)
+        
+        # 左左情况
+        if balance > 1 and val < node.left.val:
+            return self._right_rotate(node)
+        
+        # 右右情况
+        if balance < -1 and val > node.right.val:
+            return self._left_rotate(node)
+        
+        # 左右情况
+        if balance > 1 and val > node.left.val:
+            node.left = self._left_rotate(node.left)
+            return self._right_rotate(node)
+        
+        # 右左情况
+        if balance < -1 and val < node.right.val:
+            node.right = self._right_rotate(node.right)
+            return self._left_rotate(node)
+        
+        return node
+    
+    def _left_rotate(self, z):
+        y = z.right
+        T2 = y.left
+        
+        y.left = z
+        z.right = T2
+        
+        z.height = 1 + max(self._get_height(z.left), self._get_height(z.right))
+        y.height = 1 + max(self._get_height(y.left), self._get_height(y.right))
+        
+        return y
+    
+    def _right_rotate(self, z):
+        y = z.left
+        T3 = y.right
+        
+        y.right = z
+        z.left = T3
+        
+        z.height = 1 + max(self._get_height(z.left), self._get_height(z.right))
+        y.height = 1 + max(self._get_height(y.left), self._get_height(y.right))
+        
+        return y
+```
+
+### 字符串算法对比
+
+**Q9: KMP算法的不同实现**
+A9: KMP算法的不同实现方式：
+
+标准KMP：
+```python
+def kmp_search(text, pattern):
+    """标准KMP字符串匹配算法"""
+    if not pattern:
+        return 0
+    
+    # 构建部分匹配表
+    lps = [0] * len(pattern)
+    length = 0
+    i = 1
+    
+    while i < len(pattern):
+        if pattern[i] == pattern[length]:
+            length += 1
+            lps[i] = length
+            i += 1
+        else:
+            if length != 0:
+                length = lps[length - 1]
+            else:
+                lps[i] = 0
+                i += 1
+    
+    # 搜索模式
+    i = j = 0
+    while i < len(text):
+        if pattern[j] == text[i]:
+            i += 1
+            j += 1
+        
+        if j == len(pattern):
+            return i - j
+        elif i < len(text) and pattern[j] != text[i]:
+            if j != 0:
+                j = lps[j - 1]
+            else:
+                i += 1
+    
+    return -1
+```
+
+优化KMP：
+```python
+def kmp_optimized(text, pattern):
+    """优化的KMP算法"""
+    if not pattern:
+        return 0
+    
+    # 构建优化的部分匹配表
+    lps = build_lps_optimized(pattern)
+    
+    i = j = 0
+    while i < len(text):
+        if j == len(pattern):
+            return i - j
+        
+        if pattern[j] == text[i]:
+            i += 1
+            j += 1
+        else:
+            if j != 0:
+                j = lps[j - 1]
+                # 优化：如果下一个字符不匹配，跳过不必要的比较
+                if i < len(text) and pattern[j] != text[i]:
+                    j = lps[j - 1]
+            else:
+                i += 1
+    
+    return -1
+
+def build_lps_optimized(pattern):
+    """构建优化的部分匹配表"""
+    lps = [0] * len(pattern)
+    length = 0
+    i = 1
+    
+    while i < len(pattern):
+        if pattern[i] == pattern[length]:
+            length += 1
+            lps[i] = length
+            i += 1
+        else:
+            if length != 0:
+                length = lps[length - 1]
+            else:
+                lps[i] = 0
+                i += 1
+    
+    return lps
+```
+
+### 算法复杂度分析
+
+**Q10: 如何分析算法的时间和空间复杂度？**
+A10: 算法复杂度分析的方法：
+
+时间复杂度分析：
+```python
+def analyze_time_complexity():
+    """时间复杂度分析示例"""
+    
+    # O(1) - 常数时间
+    def get_first_element(arr):
+        return arr[0] if arr else None
+    
+    # O(log n) - 对数时间
+    def binary_search(arr, target):
+        left, right = 0, len(arr) - 1
+        while left <= right:
+            mid = (left + right) // 2
+            if arr[mid] == target:
+                return mid
+            elif arr[mid] < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+        return -1
+    
+    # O(n) - 线性时间
+    def find_max(arr):
+        max_val = arr[0]
+        for val in arr:
+            if val > max_val:
+                max_val = val
+        return max_val
+    
+    # O(n log n) - 线性对数时间
+    def merge_sort(arr):
+        if len(arr) <= 1:
+            return arr
+        mid = len(arr) // 2
+        left = merge_sort(arr[:mid])
+        right = merge_sort(arr[mid:])
+        return merge(left, right)
+    
+    # O(n²) - 平方时间
+    def bubble_sort(arr):
+        n = len(arr)
+        for i in range(n):
+            for j in range(0, n - i - 1):
+                if arr[j] > arr[j + 1]:
+                    arr[j], arr[j + 1] = arr[j + 1], arr[j]
+        return arr
+    
+    # O(2^n) - 指数时间
+    def fibonacci(n):
+        if n <= 1:
+            return n
+        return fibonacci(n - 1) + fibonacci(n - 2)
+```
+
+空间复杂度分析：
+```python
+def analyze_space_complexity():
+    """空间复杂度分析示例"""
+    
+    # O(1) - 常数空间
+    def find_max_constant(arr):
+        max_val = arr[0]
+        for val in arr:
+            if val > max_val:
+                max_val = val
+        return max_val
+    
+    # O(n) - 线性空间
+    def reverse_array(arr):
+        reversed_arr = arr[::-1]  # 创建新数组
+        return reversed_arr
+    
+    # O(n²) - 平方空间
+    def create_matrix(n):
+        matrix = [[0] * n for _ in range(n)]
+        return matrix
+    
+    # O(log n) - 对数空间（递归调用栈）
+    def binary_search_recursive(arr, target, left=0, right=None):
+        if right is None:
+            right = len(arr) - 1
+        
+        if left > right:
+            return -1
+        
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            return binary_search_recursive(arr, target, mid + 1, right)
+        else:
+            return binary_search_recursive(arr, target, left, mid - 1)
+```
+
+---
+*数据集特点：算法实现对比*
+*算法数量：50+个经典算法*
+*实现变体：200+种不同实现*
+*涵盖领域：排序、搜索、动态规划、图算法、数据结构、字符串处理*
+*复杂度分析：完整的时间和空间复杂度分析*
+*更新时间：2026年1月11日*

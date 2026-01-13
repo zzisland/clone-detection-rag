@@ -1,0 +1,15 @@
+# JOURNAL OF SOFTWARE MAINTENANCE AND EVOLUTION: RESEARCH AND PRACTICE
+
+**作者**: J. Softw, Wiley Inter, Oscar Nierstrasz, Matthias Rieger
+**年份**: 2023
+**会议**: ased on simple string matching are easy to implement
+**关键词**: clone, duplication, detection, plagiarism, copy, duplicate, software, code, program, fragment
+
+## 摘要
+ion, and the need to maintain multiple copies of nearly identical code  1. Although duplicated code is conceptually simple, it can be surprisingly hard to detect in large systems without the help of automated tools. Correspondence to: Matthias Rieger, Software Composition Gr oup, Institute for Applied Mathematics and Computer Science, University of Berne, Neubr uckstrasse 10, CH-3012 Berne, Switzerland. E-mail: riegeriam.unibe.ch Contractgrant sponsor: Swiss National Sci ence Foundation and Swiss Federal Ofﬁce for Education and Science; contractgrant numbers: ESPRIT Project 21975Swiss BBW 96.0015; 20-53711.98; 20-61655.00; 2000-061655.001 Received 7 January 2005 Copyright ccirclecopyrt2005 John Wiley  Sons, Ltd. Revised 3 May 2005 Accepted 16 May 2005 38 S. DUCASSE, O. NIERSTRASZ AND M. RIEGER Various approaches have been applied in practice with good results  211 . The main technical difﬁculty is that duplication is often masked by slight differences: reformatting, code modiﬁcations, ...
+
+## 链接
+- 论文链接: file://F:\clone-detection-rag\CloneDetection paper\Duca06iDuplocJSMEPaper.pdf
+
+---
+*处理时间: 2026-01-11 21:32:46*

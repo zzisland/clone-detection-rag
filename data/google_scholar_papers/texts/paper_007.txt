@@ -1,0 +1,15 @@
+# A Survey on Software Clone Detection Research¤
+
+**作者**: Software Clone, Detection Research, Chanchal Kumar, R. Cordy
+**年份**: 2023
+**会议**: ICSE'07)
+**关键词**: clone, cloning, duplication, similarity, detection, similarity, plagiarism, reuse, copy, duplicate
+
+## 摘要
+Code duplication or copying a code fragment and then reuse by pasting with or without any modications is a well known code smell in software maintenance. Several studies show that about 5 to 20 of a software systems can contain duplicated code, which is basically the results of copying existing code fragments and using then by pasting with or without minor modications. One of the major shortcomings of such duplicated fragments is that if a bug is detected in a code fragment, all the other fragments similar to it should be investigated to check the possible existence of the same bug in the similar fragments. Refactoring of the duplicated code is another prime issue in software maintenance although several studies claim that refactoring of certain clones are not desirable and there is a risk of removing them. However, it is also widely agreed that clones should at least be detected. In this paper, we survey the state of the art in clone detection research. First, we describe the clone te...
+
+## 链接
+- 论文链接: file://F:\clone-detection-rag\CloneDetection paper\A Survey on Software Clone Detection Research∗.pdf
+
+---
+*处理时间: 2026-01-11 21:32:46*

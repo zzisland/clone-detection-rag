@@ -1,0 +1,207 @@
+PMD-CPD复制粘贴检测工具使用指南
+
+PMD-CPD (Copy-Paste Detector)是PMD工具集的一部分，专门用于检测代码中的复制粘贴片段。
+
+特点：
+- 开源免费：完全开源，无使用限制
+- 多语言支持：支持多种主流编程语言
+- 易于集成：可集成到构建工具和IDE
+- 灵活配置：丰富的配置选项
+
+安装要求：
+- Java 8或更高版本
+- Maven或Gradle（可选）
+- 至少512MB内存
+
+基本语法：
+cpd [选项] 源代码目录
+
+主要选项：
+- --language：指定编程语言
+- --minimum-tokens：最小token数量
+- --format：输出格式（xml/csv/text）
+- --output：指定输出文件
+- --exclude：排除文件模式
+- --include：包含文件模式
+
+语言支持：
+- java：Java语言
+- jsp：JSP页面
+- ecma：JavaScript
+- xml：XML文件
+- xsl：XSL样式表
+- apex：Apex语言
+- plsql：PL/SQL语言
+- go：Go语言
+- kotlin：Kotlin语言
+- scala：Scala语言
+- ruby：Ruby语言
+- python：Python语言
+- php：PHP语言
+- swift：Swift语言
+
+使用示例：
+1. 检测Java代码：
+cpd --language java --minimum-tokens 100 --format xml --output cpd.xml src/
+
+2. 高精度检测：
+cpd --language java --minimum-tokens 50 --format xml src/
+
+3. 排除测试文件：
+cpd --language java --exclude "**/*Test*.java" --format xml src/
+
+4. 多语言检测：
+cpd --minimum-tokens 50 --format xml --output cpd.xml src/ test/
+
+参数配置：
+- --minimum-tokens：最小token数量（建议50-100）
+- --skip-duplicate-files：跳过重复文件
+- --skip-lexical-errors：跳过词法错误
+- --no-skip-blocks：不跳过大块代码
+- --ignore-literals：忽略字面量差异
+- --ignore-identifiers：忽略标识符差异
+
+输出格式：
+XML格式：
+- 详细的克隆信息
+- 位置和行号
+- token数量
+- 文件路径
+
+CSV格式：
+- 表格形式数据
+- 易于分析
+- 适合导入Excel
+- 简洁明了
+
+文本格式：
+- 命令行友好
+- 简单输出
+- 适合脚本处理
+- 轻量级
+
+Maven集成：
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-pmd-plugin</artifactId>
+    <version>3.19.0</version>
+    <configuration>
+        <minimumTokens>100</minimumTokens>
+        <format>xml</format>
+        <outputDirectory>${project.build.directory}</outputDirectory>
+    </configuration>
+    <executions>
+        <execution>
+            <goals>
+                <goal>cpd-check</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+
+Gradle集成：
+apply plugin: 'pmd'
+pmd {
+    toolVersion = '6.47.0'
+    cpd {
+        language = 'java'
+        minimumTokens = 100
+        ignoreLiterals = true
+        ignoreIdentifiers = true
+    }
+}
+
+IDE集成：
+1. IntelliJ IDEA：
+- 安装PMD插件
+- 配置检测规则
+- 运行CPD检查
+- 查看检测结果
+
+2. Eclipse：
+- 安装PMD插件
+- 配置项目设置
+- 自动检测
+- 问题标记
+
+3. VS Code：
+- 安装PMD扩展
+- 配置设置
+- 实时检测
+- 问题提示
+
+性能优化：
+1. 合理设置minimum-tokens
+2. 排除不必要的文件
+3. 使用多线程处理
+4. 缓存检测结果
+
+配置文件：
+创建cpd-ruleset.xml：
+<ruleset name="Custom CPD Rules">
+    <description>Custom CPD Ruleset</description>
+    <rule name="DuplicatedCode" language="java">
+        <properties>
+            <property name="minimumTokens" value="100"/>
+        </properties>
+    </rule>
+</ruleset>
+
+最佳实践：
+1. 设置合适的minimum-tokens
+2. 定期运行检测
+3. 集成到CI/CD流程
+4. 结合代码审查
+5. 建立质量标准
+
+限制：
+- 主要基于token序列
+- 语义分析能力有限
+- 对大型项目性能一般
+- 配置相对复杂
+
+适用场景：
+1. 代码审查：发现重复代码
+2. 重构指导：识别重构机会
+3. 质量控制：监控代码重复率
+4. 团队规范：统一编码标准
+5. 开源项目：许可证检查
+
+与其他工具比较：
+- vs Simian：功能更丰富，但配置复杂
+- vs CCFinder：更易集成，但性能略低
+- vs NiCad：支持更多语言，但精度较低
+
+高级功能：
+1. 自定义规则
+2. 批量处理
+3. 增量检测
+4. 报告定制
+5. API接口
+
+常见问题：
+1. 内存不足：增加JVM内存
+2. 检测速度慢：调整参数或排除文件
+3. 误报率高：提高minimum-tokens
+4. 集成问题：检查插件版本和配置
+
+教育建议：
+1. 在教学中引入CPD检测
+2. 建立合理的评分标准
+3. 培养学生代码质量意识
+4. 结合最佳实践教学
+5. 提供及时的反馈
+
+工业应用：
+1. 集成到开发流程
+2. 建立质量门禁
+3. 定期代码审查
+4. 持续改进检测
+5. 团队培训
+
+未来发展：
+1. 支持更多编程语言
+2. 改进检测算法
+3. 增强语义分析
+4. 提供更好的可视化
+5. 云原生部署

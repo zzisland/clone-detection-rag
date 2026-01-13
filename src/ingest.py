@@ -1,5 +1,6 @@
 import os
 import re
+import json
 from pathlib import Path
 from typing import List, Dict, Any
 import PyPDF2
@@ -101,7 +102,10 @@ class DataIngestor:
         self.processor = DocumentProcessor()
         # 使用 HuggingFace 的中文 Embedding 模型
         import torch
-        device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        # 临时强制使用 CPU
+        device = 'cpu'
+        print(f"⚠️ Embedding 使用 CPU 模式（RTX 5060 需要更新的 PyTorch）")
+        
         self.embeddings = HuggingFaceEmbeddings(
             model_name="BAAI/bge-small-zh-v1.5",  # 中文向量模型，轻量高效
             model_kwargs={'device': device},
@@ -118,6 +122,7 @@ class DataIngestor:
             print(f"目录不存在: {directory}")
             return documents
         
+        # 首先处理普通文档文件
         for file_path in directory_path.rglob('*'):
             if file_path.is_file() and file_path.suffix.lower() in Config.SUPPORTED_EXTENSIONS:
                 print(f"正在处理文件: {file_path}")
@@ -133,6 +138,74 @@ class DataIngestor:
                     doc = Document(page_content=cleaned_content, metadata=metadata)
                     documents.append(doc)
         
+        # 处理用户提供的论文数据（如果有）
+        processed_dir = Path("data/google_scholar_papers")
+        if processed_dir.exists():
+            documents.extend(self._load_enhanced_dataset(processed_dir))
+        
+        return documents
+    
+    def _load_enhanced_dataset(self, enhanced_dir: Path) -> List[Document]:
+        """加载增强数据集"""
+        documents = []
+        
+        # 处理论文文本文件
+        texts_dir = enhanced_dir / "texts"
+        if texts_dir.exists():
+            for file_path in texts_dir.rglob('*.txt'):
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                    
+                    if content:
+                        cleaned_content = self.processor.clean_text(content)
+                        metadata = {
+                            'source': str(file_path),
+                            'file_type': '.txt',
+                            'file_name': file_path.name,
+                            'directory': enhanced_dir.name,
+                            'content_type': 'paper'
+                        }
+                        doc = Document(page_content=cleaned_content, metadata=metadata)
+                        documents.append(doc)
+                        print(f"加载增强论文: {file_path.name}")
+                except Exception as e:
+                    print(f"加载增强论文失败 {file_path}: {e}")
+        
+        # 处理问答对
+        qa_file = enhanced_dir / "qa_pairs.json"
+        if qa_file.exists():
+            try:
+                with open(qa_file, 'r', encoding='utf-8') as f:
+                    qa_pairs = json.load(f)
+                
+                for i, qa_pair in enumerate(qa_pairs):
+                    question = qa_pair.get('question', '')
+                    answer = qa_pair.get('answer', '')
+                    source = qa_pair.get('source', '')
+                    qa_type = qa_pair.get('type', 'unknown')
+                    
+                    # 将问答对转换为文档格式
+                    qa_content = f"问题: {question}\n答案: {answer}"
+                    cleaned_content = self.processor.clean_text(qa_content)
+                    
+                    metadata = {
+                        'source': f"qa_pairs_{i+1}",
+                        'file_type': '.json',
+                        'file_name': f"qa_pair_{i+1}.json",
+                        'directory': enhanced_dir.name,
+                        'content_type': 'qa_pair',
+                        'qa_type': qa_type,
+                        'original_source': source
+                    }
+                    
+                    doc = Document(page_content=cleaned_content, metadata=metadata)
+                    documents.append(doc)
+                
+                print(f"加载 {len(qa_pairs)} 个问答对")
+            except Exception as e:
+                print(f"加载问答对失败: {e}")
+        
         return documents
     
     def create_vector_store(self, documents: List[Document]) -> Chroma:
@@ -145,12 +218,24 @@ class DataIngestor:
         split_docs = self.processor.split_documents(documents)
         print(f"分割后得到 {len(split_docs)} 个文档块")
         
-        # 创建向量数据库
-        vector_store = Chroma.from_documents(
-            documents=split_docs,
-            embedding=self.embeddings,
-            persist_directory=Config.CHROMA_PERSIST_DIRECTORY
-        )
+        # 批量处理向量化
+        print("开始向量化处理...")
+        batch_size = 100  # 批量大小
+        
+        for i in range(0, len(split_docs), batch_size):
+            batch = split_docs[i:i+batch_size]
+            print(f"处理进度: {i+batch_size}/{len(split_docs)} ({(i+batch_size)/len(split_docs)*100:.1f}%)")
+            
+            if i == 0:
+                # 第一批创建向量数据库
+                vector_store = Chroma.from_documents(
+                    documents=batch,
+                    embedding=self.embeddings,
+                    persist_directory=Config.CHROMA_PERSIST_DIRECTORY
+                )
+            else:
+                # 后续批次添加到现有数据库
+                vector_store.add_documents(batch)
         
         # 持久化
         vector_store.persist()
@@ -158,8 +243,23 @@ class DataIngestor:
         
         return vector_store
     
-    def ingest_all_data(self) -> Chroma:
+    def ingest_all_data(self, force_refresh: bool = False) -> Chroma:
         """摄取所有数据目录中的文档"""
+        # 检查是否已有向量数据库
+        if not force_refresh and os.path.exists(Config.CHROMA_PERSIST_DIRECTORY):
+            try:
+                # 尝试加载现有数据库
+                vector_store = Chroma(
+                    persist_directory=Config.CHROMA_PERSIST_DIRECTORY,
+                    embedding_function=self.embeddings
+                )
+                print("✅ 已加载现有向量数据库，跳过数据摄取")
+                print("💡 如需重新摄取，请使用 force_refresh=True")
+                return vector_store
+            except Exception as e:
+                print(f"⚠️ 加载现有数据库失败: {e}")
+                print("🔄 重新进行数据摄取...")
+        
         all_documents = []
         
         for dir_name, dir_path in Config.DATA_DIRS.items():

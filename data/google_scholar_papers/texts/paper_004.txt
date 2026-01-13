@@ -1,0 +1,15 @@
+# Incremental Clone Detection
+
+**作者**: Incremental Clone, Diploma Thesis, Computer Science
+**年份**: 2008
+**会议**: ased clone
+**关键词**: an operator, an identiﬁer
+
+## 摘要
+Finding, understanding and managing software clones  pass ages of dupli- cated source code  is of large interest, as research shows. Ho wever, most methods for detecting clones are limited to a single revisio n of a program. To gain more insight into the impact of clones, their evoluti on has to be understood. Current investigations on the evolution of clo nes detect clones for diﬀerent revisions separately and correlate them after wards. This thesis presents an incremental clone detection algori thm, which detects clones in multiple revisions of a program. It creates a mappi ng between clones of one revision to the next, supplying information ab out the addition, deletion or modiﬁcation of clones. The algorithm uses token -based clone detection and requires less time than using an existing appr oach to detect clones in each revision separately. The implementation of t he algorithm has been tested with large scale software systems. Contents 1 Introduction 1
+
+## 链接
+- 论文链接: file://F:\clone-detection-rag\CloneDetection paper\2008-incremental-clone-detection.pdf
+
+---
+*处理时间: 2026-01-11 21:32:46*

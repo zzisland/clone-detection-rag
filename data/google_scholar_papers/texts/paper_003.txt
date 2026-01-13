@@ -1,0 +1,15 @@
+# Latest updates: hps://dl.acm.org/doi/10.1145/1985441.1985453
+
+**作者**: 
+**年份**: 2023
+**会议**: ICSE11: International Conference on
+**关键词**: Repository mining, binary analysis, code clone detection
+
+## 摘要
+Software released in binary form frequently uses third-party packages without respecting their licensing terms. For in- stance, many consumer devices have ﬁrmware containing the Linux kernel, without the suppliers following the require- ments of the GNU General Public License. Such license violations are often accidental, e.g., when vendors receive binary code from their suppliers with no indication of its provenance. To help ﬁnd such violations, we have developed theBinary Analysis Tool (BAT), a system for code clone detection in binaries. Given a binary, such as a ﬁrmware image, it attempts to detect cloning of code from reposito- ries of packages in source and binary form. We evaluate and compare the eﬀectiveness of three of BATs clone detection techniques: scanning for string literals, detecting similarity through data compression, and detecting similarity by com- puting binary deltas. Categories and Subject Descriptors K.5.1  Legal Aspects of Computing : HardwareSoftware Protectio...
+
+## 链接
+- 论文链接: https://arxiv.org/abs/5441.1985453
+
+---
+*处理时间: 2026-01-11 21:32:46*

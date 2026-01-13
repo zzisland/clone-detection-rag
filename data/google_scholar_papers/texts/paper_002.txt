@@ -1,0 +1,15 @@
+# Latest updates: hps://dl.acm.org/doi/10.1145/1810295.1810308
+
+**作者**: 
+**年份**: 2023
+**会议**: ICSE '10: 32nd International Conference
+**关键词**: Redundancy, Requirements Speciﬁcation, Clone Detection
+
+## 摘要
+Due to their pivotal role in software engineering, consider- able eﬀort is spent on the quality assurance of software re-quirements speciﬁcations. As they are mainly described innatural language, relatively few means of automated qualityassessment exist. However, we found that clone detection , a technique widely applied to source code, is promising toassess one important quality aspect in an automated way,namely redundancy that stems from copypaste operations.This paper describes a large-scale case study that applied clone detection to 28 requirements speciﬁcations with a to- tal of 8,667 pages. We report on the amount of redundancyfound in real-world speciﬁcations, discuss its nature as well as its consequences and evaluate in how far existing code clone detection approaches can be applied to assess the qual- ity of requirements speciﬁcations in practice. Categories and Subject Descriptors D.2.1  Software Engineering : RequirementsSpeciﬁca- tions; D.2.8  Software Engineering : Metric...
+
+## 链接
+- 论文链接: https://arxiv.org/abs/0295.1810308
+
+---
+*处理时间: 2026-01-11 21:32:46*

@@ -1,0 +1,15 @@
+# Received April 5, 2019, accepted May 3, 2019, date of publication May 22, 2019, date of current version July 16, 2019.
+
+**作者**: Received April, Digital Object, Systematic Review, Code Clone
+**年份**: 2023
+**会议**: ICSE-C)
+**关键词**: ``code clone
+
+## 摘要
+Code cloning refers to the duplication of source code. It is the most common way of reusing source code in software development. If a bug is identi ed in one segment of code, all the similar segments need to be checked for the same bug. Consequently, this cloning process may lead to bug propagation that signi cantly affects the maintenance cost. By considering this problem, code clone detection (CCD) appears as an active area of research. Consequently, there is a strong need to investigate the latest techniques, trends, and tools in the domain of CCD. Therefore, in this paper, we comprehensively inspect the latest tools and techniques utilized for the detection of code clones. Particularly, a systematic literature review (SLR) is performed to select and investigate 54 studies pertaining to CCD. Consequently, six categories are de ned to incorporate the selected studies as per relevance, i.e., textual approaches (12), lexical approaches (8), tree- based approaches (3), metric-based appr...
+
+## 链接
+- 论文链接: file://F:\clone-detection-rag\CloneDetection paper\A_Systematic_Review_on_Code_Clone_Detection.pdf
+
+---
+*处理时间: 2026-01-11 21:32:46*

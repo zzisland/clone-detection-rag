@@ -1,0 +1,15 @@
+# Binary Code Clone Detection across Architectures
+
+**作者**: Binary Code, Clone Detection, Compiling Con
+**年份**: 2023
+**会议**: ICSE)
+**关键词**: —binary program analysis, code clone detection
+
+## 摘要
+Binary code clone detection (or similarity compar- ison) is a fundamental technique for many important applica- tions, such as plagiarism detection, malware analysis, softwarevulnerability assessment and program comprehension. With theprevailing of smart and IoT (Internet of Things) devices, moreand more programs are ported from traditional desktop plat-forms (e.g., IA-32) to ARM and MIPS architectures. It becomesimperative to detect cloned binary code across architectures.However, because of incomparable instruction sets of differentarchitectures as well as alternative compiling conﬁgurations, it isdifﬁcult to conduct a binary code clone detection with traditionalsyntax- or structure-based methods. To address, we propose a semantics-based approach to fulﬁll the target. We recognize arguments and indirect jump targets ofeach binary function, and emulate executions of those functions,extracting semantic signatures to measure the similarity offunctions. The approach has been implemented ...
+
+## 链接
+- 论文链接: file://F:\clone-detection-rag\CloneDetection paper\icpc17.pdf
+
+---
+*处理时间: 2026-01-11 21:32:46*

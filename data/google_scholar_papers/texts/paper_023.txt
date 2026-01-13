@@ -1,0 +1,15 @@
+# The NiCad Clone Detector
+
+**作者**: The Ni, Cad Clone, K. Roy
+**年份**: 2023
+**会议**: ased plugin architecture
+**关键词**: -tools, clone detection, NiCad, plugin architecture
+
+## 摘要
+The NiCad Clone Detector is a scalable, ﬂexible clone detection tool designed to implement the NiCad (Au- tomated Detection of Near-Miss Intentional Clones) hybrid clone detection method in a convenient, easy-to-use command- line tool that can easily be embedded in IDEs and other environments. It takes as input a source directory or directories to be checked for clones and a conﬁguration ﬁle specifying the normalization and ﬁltering to be done, and provides output results in both XML form for easy analysis and HTML form for convenient browsing. NiCad handles a range of languages and normalizations, and is designed to be easily extensible using a component-based plugin architecture. It is scalable to very large systems and has been used to analyze, for example, all 47 releases of FreeBSD (60 million lines) as a single system.
+
+## 链接
+- 论文链接: file://F:\clone-detection-rag\CloneDetection paper\The NiCad Clone Detector.pdf
+
+---
+*处理时间: 2026-01-11 21:32:46*

@@ -1,0 +1,15 @@
+# Proceedings of the
+
+**作者**: Industrial Software, Royal Netherlands, The Netherlands
+**年份**: 2023
+**会议**: icsetconsists
+**关键词**: software evolution, J2EE
+
+## 摘要
+Software maintenance has long been one of the most difﬁcult a nd expensive phases of the software life-cycle. Maintenance is especially difﬁcult for large- scale systems. The more code involved, the larger the chance that there may be unexpected interactions that may cause problems when updates and corrections are made during maintenance. The large number o f developers who were probably involved at various points in the systems creation means that it is li kely to be difﬁcult to answer questions about theintent behind the design and implementation decisions. The design ers, or developers, intent can be captured as their Design Rationale. Unlike standard design documentation, which is a description of the ﬁnal design, Design Rationale (DR) offers more: not only th e decisions, but also the reasons behind each decision, including its justiﬁcation, other alternat ives considered, and argumentation leading to the decision. To drive and evaluate our research into using rationale for s oftw...
+
+## 链接
+- 论文链接: file://F:\clone-detection-rag\CloneDetection paper\Evaluating_clone_detection_techniques.pdf
+
+---
+*处理时间: 2026-01-11 21:32:46*

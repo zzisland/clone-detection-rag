@@ -36,68 +36,86 @@ class CloneDetectionOutputParser(BaseOutputParser):
 class CloneDetectionRAG:
     """代码克隆检测RAG系统"""
     
-    def __init__(self):
+    def __init__(self, model_size="1.5B"):
+        """
+        初始化 RAG 系统
+        
+        Args:
+            model_size: 模型大小，可选 "1.5B" 或 "7B"
+        """
         self.retriever_manager = RetrieverManager()
         
-        # 从 HuggingFace 加载 Qwen-2.5-Coder 模型
-        # 可选: "Qwen/Qwen2.5-Coder-1.5B-Instruct" (更快) 或 "Qwen/Qwen2.5-Coder-7B-Instruct" (更强)
-        model_name = "Qwen/Qwen2.5-Coder-1.5B-Instruct"  # 使用 1.5B 版本，加载更快
+        # 根据选择加载不同的模型
+        model_configs = {
+            "1.5B": {
+                "name": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+                "description": "轻量级模型（约3GB显存）",
+                "max_tokens": 512  # 减少到512，速度快一倍
+            },
+            "7B": {
+                "name": "Qwen/Qwen2.5-Coder-7B-Instruct",
+                "description": "高性能模型（约14GB显存）",
+                "max_tokens": 768  # 适中的长度
+            }
+        }
         
-        print(f"正在加载模型: {model_name}...")
+        if model_size not in model_configs:
+            raise ValueError(f"不支持的模型大小: {model_size}，请选择 '1.5B' 或 '7B'")
+        
+        config = model_configs[model_size]
+        model_name = config["name"]
+        self.model_size = model_size
+        
+        print(f"正在加载模型: {model_name}")
+        print(f"模型配置: {config['description']}")
         print("提示: 首次加载需要下载模型，使用国内镜像加速中...")
+        print(f"镜像地址: {os.environ.get('HF_ENDPOINT', '未设置')}")
         
-        # 检测设备
-        device = "cuda" if torch.cuda.is_available() else "cpu"
+        # 检测设备 - RTX 5060 暂时使用 CPU
+        if torch.cuda.is_available():
+            print("⚠️ 检测到 GPU，但 RTX 5060 与当前 PyTorch 版本不兼容")
+            print("⚠️ 临时使用 CPU 模式，等待 PyTorch 官方支持 RTX 50 系列")
+            device = "cpu"
+        else:
+            device = "cpu"
         
         # 加载 tokenizer 和模型（添加进度提示）
         print("  [1/3] 加载 Tokenizer...")
         self.tokenizer = AutoTokenizer.from_pretrained(
             model_name,
-            trust_remote_code=True,
-            mirror='https://hf-mirror.com'  # 使用镜像
+            trust_remote_code=True
         )
         
-        # 根据设备选择不同的加载方式
-        print("  [2/3] 加载模型权重...")
-        if device == "cuda":
-            self.model = AutoModelForCausalLM.from_pretrained(
-                model_name,
-                torch_dtype=torch.float16,
-                trust_remote_code=True,
-                low_cpu_mem_usage=True,  # 减少 CPU 内存占用
-                mirror='https://hf-mirror.com'  # 使用镜像
-            ).to(device)
-        else:
-            self.model = AutoModelForCausalLM.from_pretrained(
-                model_name,
-                torch_dtype=torch.float32,
-                trust_remote_code=True,
-                low_cpu_mem_usage=True,
-                mirror='https://hf-mirror.com'  # 使用镜像
-            )
+        # 使用 CPU 模式加载
+        print("  [2/3] 加载模型权重（CPU 模式）...")
+        self.model = AutoModelForCausalLM.from_pretrained(
+            model_name,
+            torch_dtype=torch.float32,  # CPU 使用 float32
+            trust_remote_code=True,
+            low_cpu_mem_usage=True
+        )
         
         print("  [3/3] 创建推理 Pipeline...")
         
-        # 创建 pipeline
+        # 创建 pipeline（使用配置的参数）
         pipe = pipeline(
             "text-generation",
             model=self.model,
             tokenizer=self.tokenizer,
-            max_new_tokens=512,
+            max_new_tokens=config["max_tokens"],
             temperature=0.1,
             top_p=0.95,
             repetition_penalty=1.1,
-            device=0 if device == "cuda" else -1
+            device=-1  # CPU 模式
         )
         
         # 创建 LangChain LLM
         self.llm = HuggingFacePipeline(pipeline=pipe)
         
-        print(f"✅ 模型加载完成！使用设备: {device.upper()}")
-        if device == "cuda":
-            # 显示显存使用情况
-            allocated = torch.cuda.memory_allocated(0) / 1024**3
-            print(f"   GPU 显存占用: {allocated:.2f} GB")
+        print(f"✅ 模型加载完成！")
+        print(f"   模型: {model_size}")
+        print(f"   设备: {device.upper()}")
+        print(f"   说明: 等待 PyTorch 支持 RTX 50 系列后可切换回 GPU")
         
         self.memory = ConversationBufferMemory(
             memory_key="chat_history",

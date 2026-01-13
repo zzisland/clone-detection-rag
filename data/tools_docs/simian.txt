@@ -1,0 +1,139 @@
+Simian克隆检测工具使用指南
+
+Simian是一个简单高效的代码相似度检测工具，支持多种编程语言。
+
+特点：
+- 简单：易于使用和配置
+- 快速：高效的检测算法
+- 多语言：支持主流编程语言
+- 灵活：可配置的检测规则
+
+安装要求：
+- Java Runtime Environment (JRE)
+- 可选：Ant构建工具
+
+基本语法：
+simian [选项] 源代码文件
+
+主要选项：
+- -threshold：设置相似度阈值
+- -language：指定编程语言
+- -reportFile：指定报告文件
+- -formatter：报告格式（xml/html/text）
+- -ignore：忽略模式
+- -excludes：排除文件模式
+
+语言支持：
+- java：Java语言
+- csharp：C#语言
+- cpp：C++语言
+- apex：Apex语言
+- groovy：Groovy语言
+- kotlin：Kotlin语言
+- scala：Scala语言
+- sql：SQL语言
+- xml：XML语言
+
+使用示例：
+1. 检测Java代码相似度：
+simian -threshold 6 -language java src/**/*.java
+
+2. 生成XML报告：
+simian -threshold 6 -language java -reportFile simian.xml -formatter xml src/**/*.java
+
+3. 忽略测试文件：
+simian -threshold 6 -language java -excludes **/*Test*.java src/**/*.java
+
+4. 设置高阈值：
+simian -threshold 10 -language java -reportFile report.html -formatter html src/**/*.java
+
+阈值设置：
+- 默认阈值：6行
+- 高质量代码：建议10-15行
+- 快速检测：建议3-5行
+- 严格检测：建议15-20行
+
+报告格式：
+XML格式：
+- 相似代码块信息
+- 位置和行号
+- 相似度分数
+- 统计摘要
+
+HTML格式：
+- 可视化报告
+- 颜色标记
+- 交互式界面
+- 图表展示
+
+文本格式：
+- 简洁输出
+- 命令行友好
+- 易于解析
+- 适合脚本
+
+配置文件：
+创建simian.properties：
+simian.threshold=6
+simian.language=java
+simian.reportFile=simian.xml
+simian.formatter=xml
+simian.excludes=**/*Test*.java,**/generated/**
+
+性能优化：
+1. 合理设置阈值
+2. 排除不必要的文件
+3. 使用多线程处理
+4. 缓存检测结果
+
+集成方式：
+1. Maven集成：
+<plugin>
+    <groupId>com.harukizaemon</groupId>
+    <artifactId>simian-maven-plugin</artifactId>
+    <version>2.4.8</version>
+</plugin>
+
+2. Gradle集成：
+apply plugin: 'com.harukizaemon.simian'
+simian {
+    threshold = 6
+    language = 'java'
+}
+
+3. Jenkins集成：
+使用Simian插件进行持续集成
+
+限制：
+- 主要基于行相似度
+- 不支持语义分析
+- 对格式变化敏感
+- 跨文件检测能力有限
+
+适用场景：
+1. 代码审查：发现重复代码
+2. 重构指导：识别重构机会
+3. 质量控制：监控代码重复率
+4. 团队规范：统一编码标准
+
+与其他工具比较：
+- vs CCFinder：更简单易用，但功能较少
+- vs NiCad：速度快，但检测类型有限
+- vs SourcererCC：配置简单，但精度较低
+
+最佳实践：
+1. 在CI/CD中集成
+2. 设置合适的阈值
+3. 定期运行检测
+4. 结合人工审查
+
+常见问题：
+1. 误报：调整阈值或排除模式
+2. 性能：优化文件过滤和阈值
+3. 集成：使用合适的插件或脚本
+
+高级功能：
+1. 自定义语言支持
+2. 插件机制
+3. API接口
+4. 批量处理

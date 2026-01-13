@@ -1,0 +1,15 @@
+# BigCloneEval: A Clone Detection Tool Evaluation
+
+**作者**: Clone Detection, Tool Evaluation, Jeffrey Svajlenko
+**年份**: 2023
+**会议**: ICSE
+**关键词**: and source-
+
+## 摘要
+Many clone detection tools have been proposed in the literature. However, our knowledge of their performance in real software systems is limited, particularly their recall. We pre-viously introduced our BigCloneBench, a big clone benchmark of over 8 million clones within a large inter-project Java repository containing 25,000 open-source Java systems. In this paper wepresent BigCloneEval, a framework for evaluating clone detection tools with BigCloneBench. BigCloneEval makes it very easy for clone detection researchers to evaluate and compare clonedetection tools. It automates the execution and evaluation of clone detection tools against the reference clones of BigCloneBench, and summarizes recall performance from a variety of perspectives, including per clone type, and per syntactical similarity regions. I. I NTRODUCTION Clone detection tools locate similar source code within or between software systems. Instances of similar code fragments are called clones. Developers create clones w...
+
+## 链接
+- 论文链接: file://F:\clone-detection-rag\CloneDetection paper\SvajlenkoBigCloneEvalICSME2016.pdf
+
+---
+*处理时间: 2026-01-11 21:32:46*

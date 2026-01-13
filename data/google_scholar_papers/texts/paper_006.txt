@@ -1,0 +1,15 @@
+# Latest updates: hps://dl.acm.org/doi/10.1145/3395363.3397362
+
+**作者**: 
+**年份**: 2023
+**会议**: aset of C++ programs and
+**关键词**: Code clone detection, functional clone detection, code representa-
+
+## 摘要
+Clone detection of source code is among the most fundamental software engineering techniques. Despite intensive research in the pastdecade,existingtechniquesarestillunsatisfactoryindetecting functional codeclones.Inparticular,existing techniquescannot efficientlyextractsyntaxandsemanticsinformationfromsource code.Inthispaper,weproposeanoveljointcoderepresentation thatappliesfusionembeddingtechniquestolearnhiddensyntactic and semantic features of source codes. Besides, we introduce a new granularity for functional code clone detection. Our approach regards the connected methods withcaller-callee relationships as a functionalityandthemethodwithoutanycaller-calleerelationship withothermethodsrepresentsasinglefunctionality.Thenwetrain asuperviseddeeplearning modelto detectfunctionalcode clones. We conduct evaluations on a large dataset of C programs and theexperimentalresultsshowthatfusionlearningcansignificantly outperformthestate-of-the-arttechniques indetecting functional code clones. C...
+
+## 链接
+- 论文链接: https://arxiv.org/abs/5363.3397362
+
+---
+*处理时间: 2026-01-11 21:32:46*

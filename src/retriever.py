@@ -2,8 +2,8 @@ from typing import List, Dict, Any, Optional
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain.docstore.document import Document
-from langchain.schema.retriever import BaseRetriever
-from langchain.callbacks.manager import CallbackManagerForRetrieverRun
+from langchain_core.retrievers import BaseRetriever
+from langchain_core.callbacks import CallbackManagerForRetrieverRun
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
@@ -12,31 +12,21 @@ from config import Config
 class CloneDetectionRetriever(BaseRetriever):
     """专门用于代码克隆检测的检索器"""
     
-    def __init__(self, vector_store: Chroma, top_k: int = Config.TOP_K_RETRIEVAL):
-        super().__init__()
-        import torch
-        self.vector_store = vector_store
-        self.top_k = top_k
-        device = 'cuda' if torch.cuda.is_available() else 'cpu'
-        self.embeddings = HuggingFaceEmbeddings(
-            model_name="BAAI/bge-small-zh-v1.5",
-            model_kwargs={'device': device},
-            encode_kwargs={'normalize_embeddings': True}
-        )
+    vector_store: Chroma
+    top_k: int = Config.TOP_K_RETRIEVAL
+    
+    class Config:
+        arbitrary_types_allowed = True
     
     def _get_relevant_documents(
         self, 
         query: str, 
         *, 
-        run_manager: CallbackManagerForRetrieverRun
+        run_manager: Optional[CallbackManagerForRetrieverRun] = None
     ) -> List[Document]:
         """检索相关文档"""
         # 基础相似性搜索
         docs = self.vector_store.similarity_search(query, k=self.top_k)
-        
-        # 可以在这里添加更复杂的检索逻辑
-        # 例如：基于文档类型的过滤、重排序等
-        
         return docs
     
     def search_with_metadata(
@@ -85,7 +75,10 @@ class RetrieverManager:
         """加载已存在的向量数据库"""
         try:
             import torch
-            device = 'cuda' if torch.cuda.is_available() else 'cpu'
+            # 临时强制使用 CPU，避免 CUDA 兼容性问题
+            device = 'cpu'  # 改为 'cuda' 当 PyTorch 版本兼容后
+            print(f"⚠️ 当前使用 CPU 模式（RTX 5060 需要更新的 PyTorch 版本）")
+            
             embeddings = HuggingFaceEmbeddings(
                 model_name="BAAI/bge-small-zh-v1.5",
                 model_kwargs={'device': device},
@@ -95,11 +88,17 @@ class RetrieverManager:
                 persist_directory=Config.CHROMA_PERSIST_DIRECTORY,
                 embedding_function=embeddings
             )
-            self.retriever = CloneDetectionRetriever(self.vector_store)
+            # 使用 Pydantic 方式初始化
+            self.retriever = CloneDetectionRetriever(
+                vector_store=self.vector_store,
+                top_k=Config.TOP_K_RETRIEVAL
+            )
             print(f"向量数据库加载成功 (设备: {device})")
             return True
         except Exception as e:
             print(f"加载向量数据库失败: {e}")
+            import traceback
+            traceback.print_exc()
             return False
     
     def search(
@@ -114,14 +113,14 @@ class RetrieverManager:
                 return []
         
         if search_type == "general":
-            return self.retriever._get_relevant_documents(query, run_manager=None)
+            return self.retriever._get_relevant_documents(query)
         elif search_type == "filtered":
             return self.retriever.search_with_metadata(query, filters)
         elif search_type == "by_type":
             doc_type = filters.get("type", "general") if filters else "general"
             return self.retriever.get_documents_by_type(query, doc_type)
         else:
-            return self.retriever._get_relevant_documents(query, run_manager=None)
+            return self.retriever._get_relevant_documents(query)
     
     def get_search_summary(self, query: str, docs: List[Document]) -> Dict[str, Any]:
         """获取搜索结果摘要"""

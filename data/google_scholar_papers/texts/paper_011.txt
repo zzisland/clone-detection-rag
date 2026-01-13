@@ -1,0 +1,15 @@
+# Ira D. Baxter1Andrew Yahin1
+
+**作者**: Clone Detection, Using Abstract, Syntax Trees
+**年份**: 2023
+**会议**: ased software
+**关键词**: Software maintenance, clone detection, software
+
+## 摘要
+Syntax Trees Ira D. Baxter1Andrew Yahin1 Leonardo Moura2 Marcelo SantAnna2 Lorraine Bier3 1 Semantic Designs 12636 Research Blvd. Suite C214 78759-220 Austin Texas 512 250 1191 idbaxter, ayahinsemdesigns.com http:www.semdesigns.com2 Departamento de Informática Pontifícia Universidade Católica Do Rio de Janeiro R. Marquês de São Vicente, 225 22453-900 Rio de Janeiro, Brazil 55 21 529 9396 moura, dracoles.inf.puc-rio.br3 Eaton Corporation, SEO 10000 Spectrum Drive Austin, TX 78757 lbieraus.etn.com Abstract Existing research suggests that a considerable fraction (5-10) of the source code of large-scale computer programs is duplicate code (clones). Detection and removal of such clones promises decreased software maintenance costs of possibly the same magnitude. Previous work was limited to detection of either near- misses differing only in single lexems, or near misses only between complete functions. This paper presents simple and practical methods for detecting exact and near miss clones...
+
+## 链接
+- 论文链接: file://F:\clone-detection-rag\CloneDetection paper\Clone Detection Using Abstract Syntax Trees.pdf
+
+---
+*处理时间: 2026-01-11 21:32:46*

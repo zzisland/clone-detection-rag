@@ -1,0 +1,15 @@
+# Received January 25, 2021, accepted February 22, 2021, date of publication March 15, 2021, date of current version April 2, 2021.
+
+**作者**: Received January, Digital Object, Software Clone
+**年份**: 2023
+**会议**: ICSE)
+**关键词**: clone, cloning, duplication, similarity, detection, similarity, reuse, copy, duplicate, software
+
+## 摘要
+For software engineering, if two code fragments are closely similar with minor modi cations or even identical due to a copy-paste behavior, that is called softwarecode clone. Code clones can cause trouble in software maintenance and debugging process because identifying all copied compromised code fragments in other locations is time-consuming. Researchers have been working on code clone detection issues for a long time, and the discussion mainly focuses on software engineering management and system maintenance. Another considerable issue is that code cloning provides an easy way to attackers for malicious code injection. A thorough survey work of code clone identi cationdetection from the security perspective is indispensable for providing a comprehensive review of existing related works and proposing future potential research directions. This paper can satisfy above requirements. We review and introduce existing security-related works following three different classi cations and vari...
+
+## 链接
+- 论文链接: file://F:\clone-detection-rag\CloneDetection paper\A_Survey_of_Software_Clone_Detection_From_Security_Perspective.pdf
+
+---
+*处理时间: 2026-01-11 21:32:46*

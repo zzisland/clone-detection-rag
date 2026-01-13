@@ -1,0 +1,15 @@
+# Latest updates: hps://dl.acm.org/doi/10.1145/2884781.2884877
+
+**作者**: 
+**年份**: 2023
+**会议**: ICSE '16: 38th International Conference
+**关键词**: literals, and iden-
+
+## 摘要
+Despite a decade of active research, there has been a marked lack in clone detection techniques that scale to large repos- itories for detecting near-miss clones. In this paper, we present a token-based clone detector, SourcererCC, that can detect both exact and near-miss clones from large inter- project repositories using a standard workstation. It ex- ploits an optimized inverted-index to quickly query the po- tential clones of a given code block. Filtering heuristics based on token ordering are used to signi cantly reduce the size of the index, the number of code-block comparisons needed to detect the clones, as well as the number of re- quired token-comparisons needed to judge a potential clone. We evaluate the scalability, execution time, recall and preci- sion of SourcererCC, and compare it to four publicly avail- able and state-of-the-art tools. To measure recall, we use two recent benchmarks: (1) a big benchmark of real clones, BigCloneBench, and (2) a MutationInjection-based f...
+
+## 链接
+- 论文链接: file://F:\clone-detection-rag\CloneDetection paper\Scaling Code Clone Detection to Big-Code.pdf
+
+---
+*处理时间: 2026-01-11 21:32:46*

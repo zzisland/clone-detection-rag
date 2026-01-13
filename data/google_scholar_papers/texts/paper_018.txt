@@ -1,0 +1,15 @@
+# E X P E R I E N C E    R E P O R T
+
+**作者**: Incorporating Function, Clone Detection, Development Process
+**年份**: 2023
+**会议**: icsextracted with Datrix™ [3
+**关键词**: Software clones, software maintenance
+
+## 摘要
+The objective of the experiment presented in this paper is to bring insights in the evaluation of the potential benefits of introducing a function clonedetection technology in an industrial softwaredevelopment process. To take advantage of functionclone detection, two modifications to the softwaredevelopment process are presented. Our experimentconsists in evaluating the impact that these proposedchanges would have had on a specific software system ifthey had been applied over a 3 year period (involving10 000 person-months), where 6 subsequent versions ofthe software under study were released. The systemunder study is a large telecommunication software. Intotal, 89 millions lines of code have been analyzed. Afirst result showed that, against our expectations, asignificant number of clones is being removed from thesystem over time. However, this effort is insufficient toprevent the growth of the overall number of clones in thesystem. In this context the first process change wouldhave ad...
+
+## 链接
+- 论文链接: file://F:\clone-detection-rag\CloneDetection paper\Lague97.pdf
+
+---
+*处理时间: 2026-01-11 21:32:46*

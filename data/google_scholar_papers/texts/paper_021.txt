@@ -1,0 +1,15 @@
+# International Journal of Computer Applications (0975 - 8887)
+
+**作者**: International Journal, Computer Applications, Software Clone, Detection Techniques
+**年份**: 2023
+**会议**: ICSE’08
+**关键词**: Software Clone, Code Clone, Duplicated Code Detection, Clone
+
+## 摘要
+If two fragments of source code are identical or similar to each other, they are called code clones. Code clones introduce difﬁcul- ties in software maintenance and cause bug propagation. Software clones occur due to several reasons such as code reuse by copying pre-existing fragments, coding style, and repeated computation us- ing duplicated functions with slight changes in variables or data structures used. If a code fragment is edited, it will have to be checked against all related code clones to see if they need to be modiﬁed as well. Removal, avoidance or refactoring of cloned code are other important issues in software maintenance. However, sev- eral research studies have demonstrated that removal or refactoring of cloned code is sometimes harmful. In this study, code clones, common types of clones, phases of clone detection, the state-of- the-art in code clone detection techniques and tools, and challenges faced by clone detection techniques are discussed.
+
+## 链接
+- 论文链接: file://F:\clone-detection-rag\CloneDetection paper\SheneamerAbdullahIJCA2016.pdf
+
+---
+*处理时间: 2026-01-11 21:32:46*

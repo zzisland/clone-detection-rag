@@ -1,0 +1,15 @@
+# Complete and Accurate Clone Detection in Graph-based Models
+
+**作者**: Accurate Clone, Hoan Anh, Tung Thanh, H. Pham, M. Al
+**年份**: 2023
+**会议**: ICSE’09
+**关键词**: clone, cloning, duplication, similarity, detection, similarity, reuse, copy, duplicate, software
+
+## 摘要
+Model-Driven Engineering (MDE) has become an im- portant development framework for many large-scale soft- ware. Previous research has reported that as in traditional code-based development, cloning also occurs in MDE. However, there has been little work on clone detection in models with the limitations on detection precision and com- pleteness. This paper presents ModelCD , a novel clone detection tool for MatlabSimulink models, that is able to efﬁciently and accurately detect both exactly matched and approximate model clones. The core of ModelCD is two novel graph-based clone detection algorithms that are able to systematically and incrementally discover clones with a high degree of completeness, accuracy, and scalability. We have conducted an empirical evaluation with various exper- imental studies on many real-world systems to demonstrate the usefulness of our approach and to compare the perfor- mance of ModelCD with existing tools. 1 Introduction Model-Driven Engineering (MDE) has ...
+
+## 链接
+- 论文链接: file://F:\clone-detection-rag\CloneDetection paper\Complete_and_accurate_clone_detection_in.pdf
+
+---
+*处理时间: 2026-01-11 21:32:46*

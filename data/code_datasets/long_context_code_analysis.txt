@@ -1,0 +1,987 @@
+# 长上下文代码分析数据集
+
+## 长上下文代码理解与问答
+
+### 大型项目架构分析
+
+**Q1: 如何分析大型微服务架构项目的代码结构？**
+A1: 分析大型微服务架构项目的方法：
+1. 服务边界识别：通过API调用图识别服务边界
+2. 依赖关系分析：构建服务间的依赖关系图
+3. 数据流追踪：分析数据在不同服务间的流动
+4. 配置管理：检查配置文件和环境变量
+5. 部署架构：分析容器编排和部署策略
+
+示例代码分析：
+```yaml
+# docker-compose.yml
+version: '3.8'
+services:
+  user-service:
+    image: user-service:latest
+    ports:
+      - "8081:8080"
+    depends_on:
+      - database
+      - redis
+    environment:
+      - DB_HOST=database
+      - REDIS_HOST=redis
+  
+  order-service:
+    image: order-service:latest
+    ports:
+      - "8082:8080"
+    depends_on:
+      - database
+      - user-service
+    environment:
+      - DB_HOST=database
+      - USER_SERVICE_URL=http://user-service:8081
+```
+
+**Q2: 如何理解复杂的继承层次结构？**
+A2: 理解复杂继承层次结构的策略：
+1. 类图构建：绘制完整的类继承关系图
+2. 接口分析：识别接口和实现类的关系
+3. 方法重写：跟踪方法的重写链
+4. 设计模式：识别使用的设计模式
+5. 重构建议：提出简化继承结构的建议
+
+示例继承结构：
+```java
+// 基础抽象类
+public abstract class Animal {
+    protected String name;
+    protected int age;
+    
+    public abstract void makeSound();
+    public abstract void move();
+    
+    public void sleep() {
+        System.out.println(name + " is sleeping");
+    }
+}
+
+// 中间抽象类
+public abstract class Mammal extends Animal {
+    protected boolean warmBlooded = true;
+    
+    public abstract void feedYoung();
+    
+    @Override
+    public void move() {
+        System.out.println(name + " is moving on land");
+    }
+}
+
+// 具体实现类
+public class Dog extends Mammal {
+    private String breed;
+    
+    public Dog(String name, int age, String breed) {
+        this.name = name;
+        this.age = age;
+        this.breed = breed;
+    }
+    
+    @Override
+    public void makeSound() {
+        System.out.println("Woof! Woof!");
+    }
+    
+    @Override
+    public void feedYoung() {
+        System.out.println("Feeding puppies with milk");
+    }
+    
+    public void wagTail() {
+        System.out.println(name + " is wagging tail");
+    }
+}
+```
+
+### 复杂算法理解
+
+**Q3: 如何分析复杂的动态规划算法？**
+A3: 分析动态规划算法的步骤：
+1. 状态定义：明确DP状态的含义
+2. 状态转移：分析状态间的转移关系
+3. 边界条件：确定初始条件和终止条件
+4. 时间复杂度：分析算法的时间和空间复杂度
+5. 优化空间：寻找空间优化的可能性
+
+示例：最长公共子序列(LCS)
+```python
+def longest_common_subsequence(text1: str, text2: str) -> str:
+    """
+    计算两个字符串的最长公共子序列
+    使用动态规划方法，时间复杂度O(m*n)，空间复杂度O(m*n)
+    """
+    m, n = len(text1), len(text2)
+    
+    # 创建DP表
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    
+    # 填充DP表
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if text1[i-1] == text2[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    
+    # 回溯构建LCS
+    lcs = []
+    i, j = m, n
+    while i > 0 and j > 0:
+        if text1[i-1] == text2[j-1]:
+            lcs.append(text1[i-1])
+            i -= 1
+            j -= 1
+        elif dp[i-1][j] > dp[i][j-1]:
+            i -= 1
+        else:
+            j -= 1
+    
+    return ''.join(reversed(lcs))
+
+# 示例使用
+text1 = "AGGTAB"
+text2 = "GXTXAYB"
+result = longest_common_subsequence(text1, text2)
+print(f"LCS: {result}")  # 输出: GTAB
+```
+
+**Q4: 如何理解复杂的图算法实现？**
+A4: 理解图算法的方法：
+1. 图结构分析：理解图的表示方法
+2. 算法步骤：分解算法的执行步骤
+3. 数据结构：分析使用的数据结构
+4. 复杂度分析：计算时间和空间复杂度
+5. 应用场景：了解算法的实际应用
+
+示例：Dijkstra最短路径算法
+```java
+public class DijkstraAlgorithm {
+    
+    public static Map<String, Integer> dijkstra(Graph graph, String startNode) {
+        Map<String, Integer> distances = new HashMap<>();
+        Map<String, String> previous = new HashMap<>();
+        PriorityQueue<NodeDistance> queue = new PriorityQueue<>();
+        
+        // 初始化距离
+        for (String node : graph.getNodes()) {
+            distances.put(node, Integer.MAX_VALUE);
+            previous.put(node, null);
+        }
+        distances.put(startNode, 0);
+        
+        // 添加起始节点到队列
+        queue.add(new NodeDistance(startNode, 0));
+        
+        while (!queue.isEmpty()) {
+            NodeDistance current = queue.poll();
+            String currentNode = current.getNode();
+            
+            // 如果找到更短的路径，跳过
+            if (current.getDistance() > distances.get(currentNode)) {
+                continue;
+            }
+            
+            // 检查所有邻居
+            for (Edge edge : graph.getEdges(currentNode)) {
+                String neighbor = edge.getDestination();
+                int newDistance = distances.get(currentNode) + edge.getWeight();
+                
+                if (newDistance < distances.get(neighbor)) {
+                    distances.put(neighbor, newDistance);
+                    previous.put(neighbor, currentNode);
+                    queue.add(new NodeDistance(neighbor, newDistance));
+                }
+            }
+        }
+        
+        return distances;
+    }
+    
+    static class NodeDistance implements Comparable<NodeDistance> {
+        private String node;
+        private int distance;
+        
+        public NodeDistance(String node, int distance) {
+            this.node = node;
+            this.distance = distance;
+        }
+        
+        @Override
+        public int compareTo(NodeDistance other) {
+            return Integer.compare(this.distance, other.distance);
+        }
+    }
+}
+```
+
+### 设计模式识别
+
+**Q5: 如何识别代码中的设计模式？**
+A5: 识别设计模式的策略：
+1. 结构分析：分析类和接口的关系
+2. 行为模式：观察对象间的交互模式
+3. 创建模式：检查对象的创建方式
+4. 重构建议：提出应用设计模式的建议
+5. 代码质量：评估设计模式的应用质量
+
+示例：观察者模式实现
+```java
+// 主题接口
+public interface Subject {
+    void registerObserver(Observer observer);
+    void removeObserver(Observer observer);
+    void notifyObservers();
+}
+
+// 观察者接口
+public interface Observer {
+    void update(String message);
+}
+
+// 具体主题
+public class WeatherStation implements Subject {
+    private List<Observer> observers = new ArrayList<>();
+    private String weather;
+    
+    @Override
+    public void registerObserver(Observer observer) {
+        observers.add(observer);
+    }
+    
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+    
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(weather);
+        }
+    }
+    
+    public void setWeather(String weather) {
+        this.weather = weather;
+        notifyObservers();
+    }
+}
+
+// 具体观察者
+public class WeatherDisplay implements Observer {
+    private String name;
+    
+    public WeatherDisplay(String name) {
+        this.name = name;
+    }
+    
+    @Override
+    public void update(String message) {
+        System.out.println(name + " received weather update: " + message);
+    }
+}
+
+// 使用示例
+public class WeatherApp {
+    public static void main(String[] args) {
+        WeatherStation station = new WeatherStation();
+        
+        WeatherDisplay display1 = new WeatherDisplay("Display 1");
+        WeatherDisplay display2 = new WeatherDisplay("Display 2");
+        
+        station.registerObserver(display1);
+        station.registerObserver(display2);
+        
+        station.setWeather("Sunny, 25°C");
+        // 输出：
+        // Display 1 received weather update: Sunny, 25°C
+        // Display 2 received weather update: Sunny, 25°C
+    }
+}
+```
+
+### 性能优化分析
+
+**Q6: 如何分析代码的性能瓶颈？**
+A6: 分析性能瓶颈的方法：
+1. 性能剖析：使用profiling工具分析
+2. 算法复杂度：分析算法的时间复杂度
+3. 内存使用：检查内存分配和释放
+4. I/O操作：分析文件和网络I/O
+5. 并发问题：检查线程同步和竞争条件
+
+示例：性能优化前后对比
+```python
+# 优化前：O(n²)时间复杂度
+def find_duplicates_slow(arr):
+    """
+    查找数组中的重复元素 - 慢速版本
+    时间复杂度：O(n²)
+    空间复杂度：O(1)
+    """
+    duplicates = []
+    n = len(arr)
+    
+    for i in range(n):
+        for j in range(i + 1, n):
+            if arr[i] == arr[j] and arr[i] not in duplicates:
+                duplicates.append(arr[i])
+    
+    return duplicates
+
+# 优化后：O(n)时间复杂度
+def find_duplicates_fast(arr):
+    """
+    查找数组中的重复元素 - 快速版本
+    时间复杂度：O(n)
+    空间复杂度：O(n)
+    """
+    seen = set()
+    duplicates = set()
+    
+    for num in arr:
+        if num in seen:
+            duplicates.add(num)
+        else:
+            seen.add(num)
+    
+    return list(duplicates)
+
+# 性能测试
+import time
+import random
+
+# 生成测试数据
+test_data = [random.randint(1, 1000) for _ in range(10000)]
+
+# 测试慢速版本
+start_time = time.time()
+result_slow = find_duplicates_slow(test_data)
+slow_time = time.time() - start_time
+
+# 测试快速版本
+start_time = time.time()
+result_fast = find_duplicates_fast(test_data)
+fast_time = time.time() - start_time
+
+print(f"慢速版本时间: {slow_time:.4f}秒")
+print(f"快速版本时间: {fast_time:.4f}秒")
+print(f"性能提升: {slow_time/fast_time:.2f}倍")
+```
+
+### 并发编程分析
+
+**Q7: 如何分析复杂的并发代码？**
+A7: 分析并发代码的策略：
+1. 线程安全：检查共享资源的访问
+2. 死锁检测：分析可能的死锁情况
+3. 竞争条件：识别竞争条件
+4. 同步机制：分析同步原语的使用
+5. 性能影响：评估并发对性能的影响
+
+示例：生产者-消费者模式
+```java
+public class ProducerConsumerPattern {
+    private final Queue<Integer> queue = new LinkedList<>();
+    private final int capacity;
+    private final Object lock = new Object();
+    
+    public ProducerConsumerPattern(int capacity) {
+        this.capacity = capacity;
+    }
+    
+    // 生产者方法
+    public void produce() throws InterruptedException {
+        int value = 0;
+        while (true) {
+            synchronized (lock) {
+                // 等待队列不满
+                while (queue.size() == capacity) {
+                    lock.wait();
+                }
+                
+                System.out.println("Producing: " + value);
+                queue.add(value++);
+                
+                // 通知消费者
+                lock.notifyAll();
+            }
+            
+            Thread.sleep(1000); // 模拟生产时间
+        }
+    }
+    
+    // 消费者方法
+    public void consume() throws InterruptedException {
+        while (true) {
+            synchronized (lock) {
+                // 等待队列不空
+                while (queue.isEmpty()) {
+                    lock.wait();
+                }
+                
+                int value = queue.poll();
+                System.out.println("Consuming: " + value);
+                
+                // 通知生产者
+                lock.notifyAll();
+            }
+            
+            Thread.sleep(2000); // 模拟消费时间
+        }
+    }
+    
+    public static void main(String[] args) {
+        ProducerConsumerPattern pc = new ProducerConsumerPattern(5);
+        
+        // 启动生产者线程
+        Thread producerThread = new Thread(() -> {
+            try {
+                pc.produce();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+        
+        // 启动消费者线程
+        Thread consumerThread = new Thread(() -> {
+            try {
+                pc.consume();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+        
+        producerThread.start();
+        consumerThread.start();
+    }
+}
+```
+
+### 数据库交互分析
+
+**Q8: 如何分析复杂的数据库操作代码？**
+A8: 分析数据库操作的方法：
+1. SQL查询分析：检查SQL语句的效率
+2. 连接管理：分析数据库连接的使用
+3. 事务处理：检查事务的边界和隔离级别
+4. 缓存策略：分析缓存的使用情况
+5. 性能优化：提出查询优化建议
+
+示例：复杂的数据库操作
+```python
+import sqlite3
+from contextlib import contextmanager
+from typing import List, Dict, Optional
+
+class DatabaseManager:
+    def __init__(self, db_path: str):
+        self.db_path = db_path
+    
+    @contextmanager
+    def get_connection(self):
+        """数据库连接上下文管理器"""
+        conn = sqlite3.connect(self.db_path)
+        conn.row_factory = sqlite3.Row
+        try:
+            yield conn
+        finally:
+            conn.close()
+    
+    def create_tables(self):
+        """创建数据库表"""
+        with self.get_connection() as conn:
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    username TEXT UNIQUE NOT NULL,
+                    email TEXT UNIQUE NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            ''')
+            
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS orders (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user_id INTEGER NOT NULL,
+                    product_name TEXT NOT NULL,
+                    quantity INTEGER NOT NULL,
+                    price DECIMAL(10, 2) NOT NULL,
+                    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (user_id) REFERENCES users (id)
+                )
+            ''')
+            
+            conn.commit()
+    
+    def get_user_orders(self, user_id: int) -> List[Dict]:
+        """获取用户的所有订单（包含用户信息）"""
+        with self.get_connection() as conn:
+            cursor = conn.execute('''
+                SELECT u.username, u.email, o.product_name, 
+                       o.quantity, o.price, o.order_date
+                FROM users u
+                JOIN orders o ON u.id = o.user_id
+                WHERE u.id = ?
+                ORDER BY o.order_date DESC
+            ''', (user_id,))
+            
+            return [dict(row) for row in cursor.fetchall()]
+    
+    def get_order_statistics(self) -> Dict:
+        """获取订单统计信息"""
+        with self.get_connection() as conn:
+            # 总订单数
+            total_orders = conn.execute(
+                'SELECT COUNT(*) as count FROM orders'
+            ).fetchone()['count']
+            
+            # 总销售额
+            total_revenue = conn.execute('''
+                SELECT SUM(quantity * price) as total 
+                FROM orders
+            ''').fetchone()['total'] or 0
+            
+            # 最畅销产品
+            top_product = conn.execute('''
+                SELECT product_name, SUM(quantity) as total_sold
+                FROM orders
+                GROUP BY product_name
+                ORDER BY total_sold DESC
+                LIMIT 1
+            ''').fetchone()
+            
+            return {
+                'total_orders': total_orders,
+                'total_revenue': float(total_revenue),
+                'top_product': dict(top_product) if top_product else None
+            }
+    
+    def batch_insert_orders(self, orders: List[Dict]) -> bool:
+        """批量插入订单"""
+        try:
+            with self.get_connection() as conn:
+                conn.executemany('''
+                    INSERT INTO orders (user_id, product_name, quantity, price)
+                    VALUES (?, ?, ?, ?)
+                ''', [
+                    (order['user_id'], order['product_name'], 
+                     order['quantity'], order['price'])
+                    for order in orders
+                ])
+                conn.commit()
+                return True
+        except sqlite3.Error as e:
+            print(f"批量插入失败: {e}")
+            return False
+
+# 使用示例
+def main():
+    db = DatabaseManager('example.db')
+    db.create_tables()
+    
+    # 插入示例数据
+    orders = [
+        {'user_id': 1, 'product_name': 'Laptop', 'quantity': 1, 'price': 999.99},
+        {'user_id': 1, 'product_name': 'Mouse', 'quantity': 2, 'price': 25.99},
+        {'user_id': 2, 'product_name': 'Keyboard', 'quantity': 1, 'price': 79.99},
+    ]
+    
+    if db.batch_insert_orders(orders):
+        print("订单批量插入成功")
+    
+    # 获取统计信息
+    stats = db.get_order_statistics()
+    print(f"订单统计: {stats}")
+    
+    # 获取用户订单
+    user_orders = db.get_user_orders(1)
+    print(f"用户1的订单: {user_orders}")
+
+if __name__ == "__main__":
+    main()
+```
+
+### API设计分析
+
+**Q9: 如何分析RESTful API的设计质量？**
+A9: 分析RESTful API设计的方法：
+1. 资源建模：检查资源的设计是否合理
+2. HTTP方法：验证HTTP方法的正确使用
+3. 状态码：检查HTTP状态码的使用
+4. 版本控制：分析API版本管理策略
+5. 安全性：评估API的安全措施
+
+示例：RESTful API实现
+```python
+from flask import Flask, request, jsonify
+from flask_restful import Api, Resource
+from werkzeug.exceptions import NotFound, BadRequest
+import sqlite3
+from datetime import datetime
+
+app = Flask(__name__)
+api = Api(app)
+
+class Database:
+    def __init__(self):
+        self.conn = sqlite3.connect('products.db', check_same_thread=False)
+        self.conn.row_factory = sqlite3.Row
+        self._create_tables()
+    
+    def _create_tables(self):
+        self.conn.execute('''
+            CREATE TABLE IF NOT EXISTS products (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                description TEXT,
+                price DECIMAL(10, 2) NOT NULL,
+                category TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        self.conn.commit()
+    
+    def get_all_products(self, category=None, min_price=None, max_price=None):
+        query = 'SELECT * FROM products WHERE 1=1'
+        params = []
+        
+        if category:
+            query += ' AND category = ?'
+            params.append(category)
+        
+        if min_price:
+            query += ' AND price >= ?'
+            params.append(min_price)
+        
+        if max_price:
+            query += ' AND price <= ?'
+            params.append(max_price)
+        
+        query += ' ORDER BY created_at DESC'
+        
+        cursor = self.conn.execute(query, params)
+        return [dict(row) for row in cursor.fetchall()]
+    
+    def get_product(self, product_id):
+        cursor = self.conn.execute(
+            'SELECT * FROM products WHERE id = ?', (product_id,)
+        )
+        result = cursor.fetchone()
+        return dict(result) if result else None
+    
+    def create_product(self, data):
+        required_fields = ['name', 'price']
+        if not all(field in data for field in required_fields):
+            raise BadRequest("Missing required fields")
+        
+        cursor = self.conn.execute('''
+            INSERT INTO products (name, description, price, category)
+            VALUES (?, ?, ?, ?)
+        ''', (data['name'], data.get('description'), 
+              data['price'], data.get('category')))
+        
+        self.conn.commit()
+        return cursor.lastrowid
+    
+    def update_product(self, product_id, data):
+        if not self.get_product(product_id):
+            raise NotFound("Product not found")
+        
+        fields = []
+        params = []
+        
+        for field in ['name', 'description', 'price', 'category']:
+            if field in data:
+                fields.append(f'{field} = ?')
+                params.append(data[field])
+        
+        if fields:
+            fields.append('updated_at = ?')
+            params.append(datetime.now())
+            params.append(product_id)
+            
+            query = f'UPDATE products SET {", ".join(fields)} WHERE id = ?'
+            self.conn.execute(query, params)
+            self.conn.commit()
+            return True
+        
+        return False
+    
+    def delete_product(self, product_id):
+        if not self.get_product(product_id):
+            raise NotFound("Product not found")
+        
+        self.conn.execute('DELETE FROM products WHERE id = ?', (product_id,))
+        self.conn.commit()
+        return True
+
+db = Database()
+
+class ProductList(Resource):
+    def get(self):
+        """获取产品列表 - 支持过滤和分页"""
+        category = request.args.get('category')
+        min_price = request.args.get('min_price', type=float)
+        max_price = request.args.get('max_price', type=float)
+        page = request.args.get('page', 1, type=int)
+        per_page = request.args.get('per_page', 10, type=int)
+        
+        products = db.get_all_products(category, min_price, max_price)
+        
+        # 简单分页
+        start = (page - 1) * per_page
+        end = start + per_page
+        paginated_products = products[start:end]
+        
+        return {
+            'products': paginated_products,
+            'pagination': {
+                'page': page,
+                'per_page': per_page,
+                'total': len(products),
+                'pages': (len(products) + per_page - 1) // per_page
+            }
+        }
+    
+    def post(self):
+        """创建新产品"""
+        data = request.get_json()
+        
+        try:
+            product_id = db.create_product(data)
+            return {'id': product_id, 'message': 'Product created successfully'}, 201
+        except BadRequest as e:
+            return {'error': str(e)}, 400
+
+class Product(Resource):
+    def get(self, product_id):
+        """获取单个产品"""
+        product = db.get_product(product_id)
+        if product:
+            return product
+        return {'error': 'Product not found'}, 404
+    
+    def put(self, product_id):
+        """更新产品"""
+        data = request.get_json()
+        
+        try:
+            if db.update_product(product_id, data):
+                return {'message': 'Product updated successfully'}
+            return {'error': 'No fields to update'}, 400
+        except NotFound:
+            return {'error': 'Product not found'}, 404
+    
+    def delete(self, product_id):
+        """删除产品"""
+        try:
+            db.delete_product(product_id)
+            return {'message': 'Product deleted successfully'}
+        except NotFound:
+            return {'error': 'Product not found'}, 404
+
+# 注册API路由
+api.add_resource(ProductList, '/api/v1/products')
+api.add_resource(Product, '/api/v1/products/<int:product_id>')
+
+# 错误处理
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({'error': 'Resource not found'}), 404
+
+@app.errorhandler(400)
+def bad_request(error):
+    return jsonify({'error': 'Bad request'}), 400
+
+@app.errorhandler(500)
+def internal_error(error):
+    return jsonify({'error': 'Internal server error'}), 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+### 测试策略分析
+
+**Q10: 如何分析复杂的测试代码？**
+A10: 分析测试代码的方法：
+1. 测试覆盖：分析测试覆盖率
+2. 测试类型：识别单元测试、集成测试等
+3. 测试数据：检查测试数据的生成和管理
+4. 断言策略：分析断言的合理性
+5. 测试维护：评估测试的可维护性
+
+示例：复杂的测试用例
+```python
+import unittest
+from unittest.mock import Mock, patch, MagicMock
+import pytest
+from datetime import datetime
+import tempfile
+import os
+
+class TestUserService(unittest.TestCase):
+    """用户服务测试类"""
+    
+    def setUp(self):
+        """测试前准备"""
+        self.user_service = UserService()
+        self.test_user_data = {
+            'username': 'testuser',
+            'email': 'test@example.com',
+            'password': 'password123'
+        }
+    
+    def tearDown(self):
+        """测试后清理"""
+        # 清理测试数据
+        pass
+    
+    @patch('user_service.database')
+    def test_create_user_success(self, mock_db):
+        """测试成功创建用户"""
+        # 模拟数据库返回
+        mock_db.insert.return_value = 1
+        
+        # 执行测试
+        result = self.user_service.create_user(self.test_user_data)
+        
+        # 验证结果
+        self.assertTrue(result['success'])
+        self.assertEqual(result['user_id'], 1)
+        mock_db.insert.assert_called_once()
+    
+    def test_create_user_invalid_email(self):
+        """测试无效邮箱格式"""
+        invalid_data = self.test_user_data.copy()
+        invalid_data['email'] = 'invalid-email'
+        
+        with self.assertRaises(ValidationError):
+            self.user_service.create_user(invalid_data)
+    
+    @pytest.mark.parametrize("username,email,expected", [
+        ("validuser", "valid@example.com", True),
+        ("", "valid@example.com", False),
+        ("validuser", "", False),
+        ("ab", "valid@example.com", False),
+        ("validuser", "invalid", False)
+    ])
+    def test_validate_user_data(self, username, email, expected):
+        """参数化测试用户数据验证"""
+        data = {'username': username, 'email': email}
+        result = self.user_service.validate_user_data(data)
+        self.assertEqual(result, expected)
+    
+    def test_user_authentication_flow(self):
+        """测试用户认证流程"""
+        with patch('user_service.auth_service') as mock_auth:
+            # 模拟认证服务
+            mock_auth.authenticate.return_value = True
+            mock_auth.generate_token.return_value = 'test-token'
+            
+            # 执行认证
+            result = self.user_service.authenticate(
+                self.test_user_data['username'],
+                self.test_user_data['password']
+            )
+            
+            # 验证结果
+            self.assertTrue(result['success'])
+            self.assertEqual(result['token'], 'test-token')
+            mock_auth.authenticate.assert_called_once_with(
+                self.test_user_data['username'],
+                self.test_user_data['password']
+            )
+    
+    def test_concurrent_user_creation(self):
+        """测试并发用户创建"""
+        import threading
+        import time
+        
+        results = []
+        
+        def create_user_thread():
+            try:
+                result = self.user_service.create_user(self.test_user_data)
+                results.append(result)
+            except Exception as e:
+                results.append({'error': str(e)})
+        
+        # 创建多个线程
+        threads = []
+        for i in range(5):
+            thread = threading.Thread(target=create_user_thread)
+            threads.append(thread)
+            thread.start()
+        
+        # 等待所有线程完成
+        for thread in threads:
+            thread.join()
+        
+        # 验证结果
+        successful_creates = [r for r in results if r.get('success')]
+        self.assertEqual(len(successful_creates), 1)  # 只有一个应该成功
+    
+    def test_file_upload_integration(self):
+        """测试文件上传集成"""
+        with tempfile.NamedTemporaryFile(mode='w', delete=False) as f:
+            f.write("test content")
+            temp_file = f.name
+        
+        try:
+            # 模拟文件上传
+            with open(temp_file, 'rb') as f:
+                result = self.user_service.upload_avatar(1, f)
+            
+            self.assertTrue(result['success'])
+            self.assertIn('file_url', result)
+        finally:
+            os.unlink(temp_file)
+
+class TestPerformance(unittest.TestCase):
+    """性能测试类"""
+    
+    def test_bulk_user_creation_performance(self):
+        """测试批量用户创建性能"""
+        import time
+        
+        users = [
+            {
+                'username': f'user{i}',
+                'email': f'user{i}@example.com',
+                'password': 'password123'
+            }
+            for i in range(1000)
+        ]
+        
+        start_time = time.time()
+        
+        for user in users:
+            self.user_service.create_user(user)
+        
+        end_time = time.time()
+        execution_time = end_time - start_time
+        
+        # 验证性能要求（应该在5秒内完成）
+        self.assertLess(execution_time, 5.0)
+        print(f"创建1000个用户耗时: {execution_time:.2f}秒")
+
+if __name__ == '__main__':
+    # 运行测试
+    unittest.main()
+```
+
+---
+*数据集特点：长上下文代码分析*
+*代码示例数量：100+个*
+*涵盖领域：架构设计、算法、设计模式、性能优化、并发编程、数据库、API、测试*
+*更新时间：2026年1月11日*

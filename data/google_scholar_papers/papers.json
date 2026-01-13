@@ -1,0 +1,430 @@
+[
+  {
+    "title": "Latest updates: hps://dl.acm.org/doi/10.1145/1368088.1368172",
+    "authors": [],
+    "abstract": "Model-based development is becoming an increasingly com- mon development methodology. In important domains like embedded systems already major parts of the code are gener- ated from models speci ed with domain-speci c modelling languages. Hence, such models are nowadays an integral part of the software development and maintenance process and therefore have a major economic and strategic value for the software-developing organisations. Nevertheless almost no work has been done on a quality defect that is known to seriously hamper maintenance productivity in classic code- based development: Cloning . This paper presents an ap- proach for the automatic detection of clones in large mod- els as they are used in model-based development of con- trol systems. The approach is based on graph theory and hence can be applied to most graphical data- ow languages. An industrial case study demonstrates the applicability of our approach for the detection of clones in MatlabSimulink models that are wid...",
+    "year": 2023,
+    "venue": "ICSE '08: International Conference on",
+    "url": "https://arxiv.org/abs/8088.1368172",
+    "keywords": [
+      "Clone detection",
+      "model clone",
+      "Matlab/Simulink",
+      "data-\row"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "Latest updates: hps://dl.acm.org/doi/10.1145/1810295.1810308",
+    "authors": [],
+    "abstract": "Due to their pivotal role in software engineering, consider- able eﬀort is spent on the quality assurance of software re-quirements speciﬁcations. As they are mainly described innatural language, relatively few means of automated qualityassessment exist. However, we found that clone detection , a technique widely applied to source code, is promising toassess one important quality aspect in an automated way,namely redundancy that stems from copypaste operations.This paper describes a large-scale case study that applied clone detection to 28 requirements speciﬁcations with a to- tal of 8,667 pages. We report on the amount of redundancyfound in real-world speciﬁcations, discuss its nature as well as its consequences and evaluate in how far existing code clone detection approaches can be applied to assess the qual- ity of requirements speciﬁcations in practice. Categories and Subject Descriptors D.2.1  Software Engineering : RequirementsSpeciﬁca- tions; D.2.8  Software Engineering : Metric...",
+    "year": 2023,
+    "venue": "ICSE '10: 32nd International Conference",
+    "url": "https://arxiv.org/abs/0295.1810308",
+    "keywords": [
+      "Redundancy",
+      "Requirements Speciﬁcation",
+      "Clone Detection"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "Latest updates: hps://dl.acm.org/doi/10.1145/1985441.1985453",
+    "authors": [],
+    "abstract": "Software released in binary form frequently uses third-party packages without respecting their licensing terms. For in- stance, many consumer devices have ﬁrmware containing the Linux kernel, without the suppliers following the require- ments of the GNU General Public License. Such license violations are often accidental, e.g., when vendors receive binary code from their suppliers with no indication of its provenance. To help ﬁnd such violations, we have developed theBinary Analysis Tool (BAT), a system for code clone detection in binaries. Given a binary, such as a ﬁrmware image, it attempts to detect cloning of code from reposito- ries of packages in source and binary form. We evaluate and compare the eﬀectiveness of three of BATs clone detection techniques: scanning for string literals, detecting similarity through data compression, and detecting similarity by com- puting binary deltas. Categories and Subject Descriptors K.5.1  Legal Aspects of Computing : HardwareSoftware Protectio...",
+    "year": 2023,
+    "venue": "ICSE11: International Conference on",
+    "url": "https://arxiv.org/abs/5441.1985453",
+    "keywords": [
+      "Repository mining",
+      "binary analysis",
+      "code clone detection"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "Incremental Clone Detection",
+    "authors": [
+      "Incremental Clone",
+      "Diploma Thesis",
+      "Computer Science"
+    ],
+    "abstract": "Finding, understanding and managing software clones  pass ages of dupli- cated source code  is of large interest, as research shows. Ho wever, most methods for detecting clones are limited to a single revisio n of a program. To gain more insight into the impact of clones, their evoluti on has to be understood. Current investigations on the evolution of clo nes detect clones for diﬀerent revisions separately and correlate them after wards. This thesis presents an incremental clone detection algori thm, which detects clones in multiple revisions of a program. It creates a mappi ng between clones of one revision to the next, supplying information ab out the addition, deletion or modiﬁcation of clones. The algorithm uses token -based clone detection and requires less time than using an existing appr oach to detect clones in each revision separately. The implementation of t he algorithm has been tested with large scale software systems. Contents 1 Introduction 1",
+    "year": 2008,
+    "venue": "ased clone",
+    "url": "file://F:\\clone-detection-rag\\CloneDetection paper\\2008-incremental-clone-detection.pdf",
+    "keywords": [
+      "an operator",
+      "an identiﬁer"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "Latest updates: hps://dl.acm.org/doi/10.1145/2970276.2970326",
+    "authors": [
+      "United States",
+      "United States",
+      "United States"
+    ],
+    "abstract": "Code clone detection is an important problem for software maintenance and evolution. Many approaches consider ei- ther structure or identiﬁers, but none of the existing detec- tion techniques model bothsources of information. These techniques also depend on generic, handcrafted features to represent code fragments. We introduce learning-based de- tection techniques where everything for representing terms and fragments in source code is mined from the repository. Our code analysis supports a framework, which relies on deep learning, for automatically linking patterns mined at the lexical level with patterns mined at the syntactic level. We evaluated our novel learning-based approach for code clone detection with respect to feasibility from the point of view of software maintainers. We sampled and manually evaluated 398 ﬁle- and 480 method-level pairs across eight real-world Java systems; 93 of the ﬁle- and method-level samples were evaluated to be true positives. Among the true positive...",
+    "year": 2023,
+    "venue": "ICSE’12",
+    "url": "https://arxiv.org/abs/0276.2970326",
+    "keywords": [
+      "code clone detection",
+      "machine learning",
+      "deep learning",
+      "neu-"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "Latest updates: hps://dl.acm.org/doi/10.1145/3395363.3397362",
+    "authors": [],
+    "abstract": "Clone detection of source code is among the most fundamental software engineering techniques. Despite intensive research in the pastdecade,existingtechniquesarestillunsatisfactoryindetecting functional codeclones.Inparticular,existing techniquescannot efficientlyextractsyntaxandsemanticsinformationfromsource code.Inthispaper,weproposeanoveljointcoderepresentation thatappliesfusionembeddingtechniquestolearnhiddensyntactic and semantic features of source codes. Besides, we introduce a new granularity for functional code clone detection. Our approach regards the connected methods withcaller-callee relationships as a functionalityandthemethodwithoutanycaller-calleerelationship withothermethodsrepresentsasinglefunctionality.Thenwetrain asuperviseddeeplearning modelto detectfunctionalcode clones. We conduct evaluations on a large dataset of C programs and theexperimentalresultsshowthatfusionlearningcansignificantly outperformthestate-of-the-arttechniques indetecting functional code clones. C...",
+    "year": 2023,
+    "venue": "aset of C++ programs and",
+    "url": "https://arxiv.org/abs/5363.3397362",
+    "keywords": [
+      "Code clone detection",
+      "functional clone detection",
+      "code representa-"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "A Survey on Software Clone Detection Research¤",
+    "authors": [
+      "Software Clone",
+      "Detection Research",
+      "Chanchal Kumar",
+      "R. Cordy"
+    ],
+    "abstract": "Code duplication or copying a code fragment and then reuse by pasting with or without any modications is a well known code smell in software maintenance. Several studies show that about 5 to 20 of a software systems can contain duplicated code, which is basically the results of copying existing code fragments and using then by pasting with or without minor modications. One of the major shortcomings of such duplicated fragments is that if a bug is detected in a code fragment, all the other fragments similar to it should be investigated to check the possible existence of the same bug in the similar fragments. Refactoring of the duplicated code is another prime issue in software maintenance although several studies claim that refactoring of certain clones are not desirable and there is a risk of removing them. However, it is also widely agreed that clones should at least be detected. In this paper, we survey the state of the art in clone detection research. First, we describe the clone te...",
+    "year": 2023,
+    "venue": "ICSE'07)",
+    "url": "file://F:\\clone-detection-rag\\CloneDetection paper\\A Survey on Software Clone Detection Research∗.pdf",
+    "keywords": [
+      "clone",
+      "cloning",
+      "duplication",
+      "similarity",
+      "detection",
+      "similarity",
+      "plagiarism",
+      "reuse",
+      "copy",
+      "duplicate"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "Received January 25, 2021, accepted February 22, 2021, date of publication March 15, 2021, date of current version April 2, 2021.",
+    "authors": [
+      "Received January",
+      "Digital Object",
+      "Software Clone"
+    ],
+    "abstract": "For software engineering, if two code fragments are closely similar with minor modi cations or even identical due to a copy-paste behavior, that is called softwarecode clone. Code clones can cause trouble in software maintenance and debugging process because identifying all copied compromised code fragments in other locations is time-consuming. Researchers have been working on code clone detection issues for a long time, and the discussion mainly focuses on software engineering management and system maintenance. Another considerable issue is that code cloning provides an easy way to attackers for malicious code injection. A thorough survey work of code clone identi cationdetection from the security perspective is indispensable for providing a comprehensive review of existing related works and proposing future potential research directions. This paper can satisfy above requirements. We review and introduce existing security-related works following three different classi cations and vari...",
+    "year": 2023,
+    "venue": "ICSE)",
+    "url": "file://F:\\clone-detection-rag\\CloneDetection paper\\A_Survey_of_Software_Clone_Detection_From_Security_Perspective.pdf",
+    "keywords": [
+      "clone",
+      "cloning",
+      "duplication",
+      "similarity",
+      "detection",
+      "similarity",
+      "reuse",
+      "copy",
+      "duplicate",
+      "software"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "Received April 5, 2019, accepted May 3, 2019, date of publication May 22, 2019, date of current version July 16, 2019.",
+    "authors": [
+      "Received April",
+      "Digital Object",
+      "Systematic Review",
+      "Code Clone"
+    ],
+    "abstract": "Code cloning refers to the duplication of source code. It is the most common way of reusing source code in software development. If a bug is identi ed in one segment of code, all the similar segments need to be checked for the same bug. Consequently, this cloning process may lead to bug propagation that signi cantly affects the maintenance cost. By considering this problem, code clone detection (CCD) appears as an active area of research. Consequently, there is a strong need to investigate the latest techniques, trends, and tools in the domain of CCD. Therefore, in this paper, we comprehensively inspect the latest tools and techniques utilized for the detection of code clones. Particularly, a systematic literature review (SLR) is performed to select and investigate 54 studies pertaining to CCD. Consequently, six categories are de ned to incorporate the selected studies as per relevance, i.e., textual approaches (12), lexical approaches (8), tree- based approaches (3), metric-based appr...",
+    "year": 2023,
+    "venue": "ICSE-C)",
+    "url": "file://F:\\clone-detection-rag\\CloneDetection paper\\A_Systematic_Review_on_Code_Clone_Detection.pdf",
+    "keywords": [
+      "``code clone"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "Copyright 2002 IEEE.",
+    "authors": [
+      "Source Code",
+      "Service Center",
+      "Hoes Lane",
+      "O. Box"
+    ],
+    "abstract": "This paper describes the results of a process wherebythe detection capability of 5 code replication detectiontools for large software application are evaluated.Specifically this work focuses on the benefits ofidentification for preventative maintenance that is withthe aim to remove some of the identified clones fromthe source code. A number of requirements aretherefore identified upon which the tools are evaluated.The results of the analysis processes show that eachtool has its own strengths and weaknesses and nosingle tool is able to identifyall clones within thecode.The paper proposes that it may be possible to use acombination of tools to perform the analysis processproviding that adequatemeansofefficientlyidentifyingfalse matches is found.",
+    "year": 2023,
+    "venue": "ase [Duc99]points out that “ making a code fragment is simpler and",
+    "url": "file://F:\\clone-detection-rag\\CloneDetection paper\\Bailey02.pdf",
+    "keywords": [
+      "clone",
+      "cloning",
+      "duplication",
+      "similarity",
+      "detection",
+      "similarity",
+      "plagiarism",
+      "reuse",
+      "copy",
+      "duplicate"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "Ira D. Baxter1Andrew Yahin1",
+    "authors": [
+      "Clone Detection",
+      "Using Abstract",
+      "Syntax Trees"
+    ],
+    "abstract": "Syntax Trees Ira D. Baxter1Andrew Yahin1 Leonardo Moura2 Marcelo SantAnna2 Lorraine Bier3 1 Semantic Designs 12636 Research Blvd. Suite C214 78759-220 Austin Texas 512 250 1191 idbaxter, ayahinsemdesigns.com http:www.semdesigns.com2 Departamento de Informática Pontifícia Universidade Católica Do Rio de Janeiro R. Marquês de São Vicente, 225 22453-900 Rio de Janeiro, Brazil 55 21 529 9396 moura, dracoles.inf.puc-rio.br3 Eaton Corporation, SEO 10000 Spectrum Drive Austin, TX 78757 lbieraus.etn.com Abstract Existing research suggests that a considerable fraction (5-10) of the source code of large-scale computer programs is duplicate code (clones). Detection and removal of such clones promises decreased software maintenance costs of possibly the same magnitude. Previous work was limited to detection of either near- misses differing only in single lexems, or near misses only between complete functions. This paper presents simple and practical methods for detecting exact and near miss clones...",
+    "year": 2023,
+    "venue": "ased software",
+    "url": "file://F:\\clone-detection-rag\\CloneDetection paper\\Clone Detection Using Abstract Syntax Trees.pdf",
+    "keywords": [
+      "Software maintenance",
+      "clone detection",
+      "software"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "Model Clone Detection in Practice",
+    "authors": [
+      "Model Clone",
+      "Florian Deissenboeck",
+      "Benjamin Hummel"
+    ],
+    "abstract": "Cloned code is considered harmful for two reasons: (1) mul- tiple, possibly unnecessary, duplicates of code increase main- tenance costs and, (2) inconsistent changes to cloned code can create faults and, hence, lead to incorrect program be- havior. Likewise, duplicated parts of models are problem- atic in model-based development. Recently, we and other authors proposed multiple approaches to automatically iden- tify duplicates in graphical models. While it has been demon- strated that these approaches work in principal, a number of challenges remain for application in industrial practice. Based on an industrial case study undertaken with the BMW Group, this paper details on these challenges and presents solutions to the most pressing ones, namely scalability and relevance of the results. Moreover, we present tool support that eases the evaluation of detection results and thereby helps to make clone detection a standard technique in model- based quality assurance. Categories and Subjec...",
+    "year": 2023,
+    "venue": "ICSE’08",
+    "url": "file://F:\\clone-detection-rag\\CloneDetection paper\\Code_clone_detection_in_practice.pdf",
+    "keywords": [
+      "Clone Detection",
+      "Data-Flow Models"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "Complete and Accurate Clone Detection in Graph-based Models",
+    "authors": [
+      "Accurate Clone",
+      "Hoan Anh",
+      "Tung Thanh",
+      "H. Pham",
+      "M. Al"
+    ],
+    "abstract": "Model-Driven Engineering (MDE) has become an im- portant development framework for many large-scale soft- ware. Previous research has reported that as in traditional code-based development, cloning also occurs in MDE. However, there has been little work on clone detection in models with the limitations on detection precision and com- pleteness. This paper presents ModelCD , a novel clone detection tool for MatlabSimulink models, that is able to efﬁciently and accurately detect both exactly matched and approximate model clones. The core of ModelCD is two novel graph-based clone detection algorithms that are able to systematically and incrementally discover clones with a high degree of completeness, accuracy, and scalability. We have conducted an empirical evaluation with various exper- imental studies on many real-world systems to demonstrate the usefulness of our approach and to compare the perfor- mance of ModelCD with existing tools. 1 Introduction Model-Driven Engineering (MDE) has ...",
+    "year": 2023,
+    "venue": "ICSE’09",
+    "url": "file://F:\\clone-detection-rag\\CloneDetection paper\\Complete_and_accurate_clone_detection_in.pdf",
+    "keywords": [
+      "clone",
+      "cloning",
+      "duplication",
+      "similarity",
+      "detection",
+      "similarity",
+      "reuse",
+      "copy",
+      "duplicate",
+      "software"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "JOURNAL OF SOFTWARE MAINTENANCE AND EVOLUTION: RESEARCH AND PRACTICE",
+    "authors": [
+      "J. Softw",
+      "Wiley Inter",
+      "Oscar Nierstrasz",
+      "Matthias Rieger"
+    ],
+    "abstract": "ion, and the need to maintain multiple copies of nearly identical code  1. Although duplicated code is conceptually simple, it can be surprisingly hard to detect in large systems without the help of automated tools. Correspondence to: Matthias Rieger, Software Composition Gr oup, Institute for Applied Mathematics and Computer Science, University of Berne, Neubr uckstrasse 10, CH-3012 Berne, Switzerland. E-mail: riegeriam.unibe.ch Contractgrant sponsor: Swiss National Sci ence Foundation and Swiss Federal Ofﬁce for Education and Science; contractgrant numbers: ESPRIT Project 21975Swiss BBW 96.0015; 20-53711.98; 20-61655.00; 2000-061655.001 Received 7 January 2005 Copyright ccirclecopyrt2005 John Wiley  Sons, Ltd. Revised 3 May 2005 Accepted 16 May 2005 38 S. DUCASSE, O. NIERSTRASZ AND M. RIEGER Various approaches have been applied in practice with good results  211 . The main technical difﬁculty is that duplication is often masked by slight differences: reformatting, code modiﬁcations, ...",
+    "year": 2023,
+    "venue": "ased on simple string matching are easy to implement",
+    "url": "file://F:\\clone-detection-rag\\CloneDetection paper\\Duca06iDuplocJSMEPaper.pdf",
+    "keywords": [
+      "clone",
+      "duplication",
+      "detection",
+      "plagiarism",
+      "copy",
+      "duplicate",
+      "software",
+      "code",
+      "program",
+      "fragment"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "Proceedings of the",
+    "authors": [
+      "Industrial Software",
+      "Royal Netherlands",
+      "The Netherlands"
+    ],
+    "abstract": "Software maintenance has long been one of the most difﬁcult a nd expensive phases of the software life-cycle. Maintenance is especially difﬁcult for large- scale systems. The more code involved, the larger the chance that there may be unexpected interactions that may cause problems when updates and corrections are made during maintenance. The large number o f developers who were probably involved at various points in the systems creation means that it is li kely to be difﬁcult to answer questions about theintent behind the design and implementation decisions. The design ers, or developers, intent can be captured as their Design Rationale. Unlike standard design documentation, which is a description of the ﬁnal design, Design Rationale (DR) offers more: not only th e decisions, but also the reasons behind each decision, including its justiﬁcation, other alternat ives considered, and argumentation leading to the decision. To drive and evaluate our research into using rationale for s oftw...",
+    "year": 2023,
+    "venue": "icsetconsists",
+    "url": "file://F:\\clone-detection-rag\\CloneDetection paper\\Evaluating_clone_detection_techniques.pdf",
+    "keywords": [
+      "software evolution",
+      "J2EE"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "Binary Code Clone Detection across Architectures",
+    "authors": [
+      "Binary Code",
+      "Clone Detection",
+      "Compiling Con"
+    ],
+    "abstract": "Binary code clone detection (or similarity compar- ison) is a fundamental technique for many important applica- tions, such as plagiarism detection, malware analysis, softwarevulnerability assessment and program comprehension. With theprevailing of smart and IoT (Internet of Things) devices, moreand more programs are ported from traditional desktop plat-forms (e.g., IA-32) to ARM and MIPS architectures. It becomesimperative to detect cloned binary code across architectures.However, because of incomparable instruction sets of differentarchitectures as well as alternative compiling conﬁgurations, it isdifﬁcult to conduct a binary code clone detection with traditionalsyntax- or structure-based methods. To address, we propose a semantics-based approach to fulﬁll the target. We recognize arguments and indirect jump targets ofeach binary function, and emulate executions of those functions,extracting semantic signatures to measure the similarity offunctions. The approach has been implemented ...",
+    "year": 2023,
+    "venue": "ICSE)",
+    "url": "file://F:\\clone-detection-rag\\CloneDetection paper\\icpc17.pdf",
+    "keywords": [
+      "—binary program analysis",
+      "code clone detection"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "CCLearner: A Deep Learning-Based Clone",
+    "authors": [
+      "Deep Learning",
+      "Based Clone",
+      "Detection Approach"
+    ],
+    "abstract": "Programmers produce code clones when developing software. By copying and pasting code with or without modiﬁ- cation, developers reuse existing code to improve programming productivity. However, code clones present challenges to software maintenance: they may require consistent application of the same or similar bug ﬁxes or program changes to multiple code locations. To simplify the maintenance process, various tools have been proposed to automatically detect clones 1, 2, 3, 4, 5, 6. Some tools tokenize source code, and then compare the sequence or frequency of tokens to reveal clones 1, 3, 4, 5. Some other tools detect clones using tree-matching algorithms to compare the Abstract Syntax Trees (ASTs) of source code 2, 6. In this paper, we present CCL EARNER ,the ﬁrst solely token-based clone detection approach leveraging deep learning . CCL EARNER extracts tokens from known method-level code clones and non- clones to train a classiﬁer, and then uses the classiﬁer to detect clones in a g...",
+    "year": 2023,
+    "venue": "ICSE",
+    "url": "file://F:\\clone-detection-rag\\CloneDetection paper\\icsme-research-118-camera-ready.pdf",
+    "keywords": [
+      "-deep learning",
+      "clone detection",
+      "empirical"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "E X P E R I E N C E    R E P O R T",
+    "authors": [
+      "Incorporating Function",
+      "Clone Detection",
+      "Development Process"
+    ],
+    "abstract": "The objective of the experiment presented in this paper is to bring insights in the evaluation of the potential benefits of introducing a function clonedetection technology in an industrial softwaredevelopment process. To take advantage of functionclone detection, two modifications to the softwaredevelopment process are presented. Our experimentconsists in evaluating the impact that these proposedchanges would have had on a specific software system ifthey had been applied over a 3 year period (involving10 000 person-months), where 6 subsequent versions ofthe software under study were released. The systemunder study is a large telecommunication software. Intotal, 89 millions lines of code have been analyzed. Afirst result showed that, against our expectations, asignificant number of clones is being removed from thesystem over time. However, this effort is insufficient toprevent the growth of the overall number of clones in thesystem. In this context the first process change wouldhave ad...",
+    "year": 2023,
+    "venue": "icsextracted with Datrix™ [3",
+    "url": "file://F:\\clone-detection-rag\\CloneDetection paper\\Lague97.pdf",
+    "keywords": [
+      "Software clones",
+      "software maintenance"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "Software clone detection: A systematic review",
+    "authors": [
+      "Dhavleesh Rattana",
+      "Rajesh Bhatiab",
+      "Maninder Singhc"
+    ],
+    "abstract": "Context: Reusing software by means of copy and paste is a frequent activity in software development. The duplicated code is known as a software clone and the activity is known as code cloning . Software clones may lead to bug propagation and serious maintenance problems. Objective: This study reports an extensive systematic literature review of software clones in general and software clone detection in particular. Method: We used the standard systematic literature review method based on a comprehensive set of 213 articles from a total of 2039 articles published in 11 leading journals and 37 premier conferences andworkshops.Results: Existing literature about software clones is classiﬁed broadly into different categories. The importance of semantic clone detection and model based clone detection led to different classiﬁcations. Empirical evaluation of clone detection toolstechniques is presented. Clone management, its beneﬁtsand cross cutting nature is reported. Number of studies pertain...",
+    "year": 2013,
+    "venue": "icSemantic web reasoner Scalable",
+    "url": "file://F:\\clone-detection-rag\\CloneDetection paper\\Rattan - Software Clone Detection - 2013.pdf",
+    "keywords": [
+      "Software clone"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "Latest updates: hps://dl.acm.org/doi/10.1145/2884781.2884877",
+    "authors": [],
+    "abstract": "Despite a decade of active research, there has been a marked lack in clone detection techniques that scale to large repos- itories for detecting near-miss clones. In this paper, we present a token-based clone detector, SourcererCC, that can detect both exact and near-miss clones from large inter- project repositories using a standard workstation. It ex- ploits an optimized inverted-index to quickly query the po- tential clones of a given code block. Filtering heuristics based on token ordering are used to signi cantly reduce the size of the index, the number of code-block comparisons needed to detect the clones, as well as the number of re- quired token-comparisons needed to judge a potential clone. We evaluate the scalability, execution time, recall and preci- sion of SourcererCC, and compare it to four publicly avail- able and state-of-the-art tools. To measure recall, we use two recent benchmarks: (1) a big benchmark of real clones, BigCloneBench, and (2) a MutationInjection-based f...",
+    "year": 2023,
+    "venue": "ICSE '16: 38th International Conference",
+    "url": "file://F:\\clone-detection-rag\\CloneDetection paper\\Scaling Code Clone Detection to Big-Code.pdf",
+    "keywords": [
+      "literals",
+      "and iden-"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "International Journal of Computer Applications (0975 - 8887)",
+    "authors": [
+      "International Journal",
+      "Computer Applications",
+      "Software Clone",
+      "Detection Techniques"
+    ],
+    "abstract": "If two fragments of source code are identical or similar to each other, they are called code clones. Code clones introduce difﬁcul- ties in software maintenance and cause bug propagation. Software clones occur due to several reasons such as code reuse by copying pre-existing fragments, coding style, and repeated computation us- ing duplicated functions with slight changes in variables or data structures used. If a code fragment is edited, it will have to be checked against all related code clones to see if they need to be modiﬁed as well. Removal, avoidance or refactoring of cloned code are other important issues in software maintenance. However, sev- eral research studies have demonstrated that removal or refactoring of cloned code is sometimes harmful. In this study, code clones, common types of clones, phases of clone detection, the state-of- the-art in code clone detection techniques and tools, and challenges faced by clone detection techniques are discussed.",
+    "year": 2023,
+    "venue": "ICSE’08",
+    "url": "file://F:\\clone-detection-rag\\CloneDetection paper\\SheneamerAbdullahIJCA2016.pdf",
+    "keywords": [
+      "Software Clone",
+      "Code Clone",
+      "Duplicated Code Detection",
+      "Clone"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "BigCloneEval: A Clone Detection Tool Evaluation",
+    "authors": [
+      "Clone Detection",
+      "Tool Evaluation",
+      "Jeffrey Svajlenko"
+    ],
+    "abstract": "Many clone detection tools have been proposed in the literature. However, our knowledge of their performance in real software systems is limited, particularly their recall. We pre-viously introduced our BigCloneBench, a big clone benchmark of over 8 million clones within a large inter-project Java repository containing 25,000 open-source Java systems. In this paper wepresent BigCloneEval, a framework for evaluating clone detection tools with BigCloneBench. BigCloneEval makes it very easy for clone detection researchers to evaluate and compare clonedetection tools. It automates the execution and evaluation of clone detection tools against the reference clones of BigCloneBench, and summarizes recall performance from a variety of perspectives, including per clone type, and per syntactical similarity regions. I. I NTRODUCTION Clone detection tools locate similar source code within or between software systems. Instances of similar code fragments are called clones. Developers create clones w...",
+    "year": 2023,
+    "venue": "ICSE",
+    "url": "file://F:\\clone-detection-rag\\CloneDetection paper\\SvajlenkoBigCloneEvalICSME2016.pdf",
+    "keywords": [
+      "and source-"
+    ],
+    "citations": 0
+  },
+  {
+    "title": "The NiCad Clone Detector",
+    "authors": [
+      "The Ni",
+      "Cad Clone",
+      "K. Roy"
+    ],
+    "abstract": "The NiCad Clone Detector is a scalable, ﬂexible clone detection tool designed to implement the NiCad (Au- tomated Detection of Near-Miss Intentional Clones) hybrid clone detection method in a convenient, easy-to-use command- line tool that can easily be embedded in IDEs and other environments. It takes as input a source directory or directories to be checked for clones and a conﬁguration ﬁle specifying the normalization and ﬁltering to be done, and provides output results in both XML form for easy analysis and HTML form for convenient browsing. NiCad handles a range of languages and normalizations, and is designed to be easily extensible using a component-based plugin architecture. It is scalable to very large systems and has been used to analyze, for example, all 47 releases of FreeBSD (60 million lines) as a single system.",
+    "year": 2023,
+    "venue": "ased plugin architecture",
+    "url": "file://F:\\clone-detection-rag\\CloneDetection paper\\The NiCad Clone Detector.pdf",
+    "keywords": [
+      "-tools",
+      "clone detection",
+      "NiCad",
+      "plugin architecture"
+    ],
+    "citations": 0
+  }
+]

@@ -1,0 +1,15 @@
+# CCLearner: A Deep Learning-Based Clone
+
+**作者**: Deep Learning, Based Clone, Detection Approach
+**年份**: 2023
+**会议**: ICSE
+**关键词**: -deep learning, clone detection, empirical
+
+## 摘要
+Programmers produce code clones when developing software. By copying and pasting code with or without modiﬁ- cation, developers reuse existing code to improve programming productivity. However, code clones present challenges to software maintenance: they may require consistent application of the same or similar bug ﬁxes or program changes to multiple code locations. To simplify the maintenance process, various tools have been proposed to automatically detect clones 1, 2, 3, 4, 5, 6. Some tools tokenize source code, and then compare the sequence or frequency of tokens to reveal clones 1, 3, 4, 5. Some other tools detect clones using tree-matching algorithms to compare the Abstract Syntax Trees (ASTs) of source code 2, 6. In this paper, we present CCL EARNER ,the ﬁrst solely token-based clone detection approach leveraging deep learning . CCL EARNER extracts tokens from known method-level code clones and non- clones to train a classiﬁer, and then uses the classiﬁer to detect clones in a g...
+
+## 链接
+- 论文链接: file://F:\clone-detection-rag\CloneDetection paper\icsme-research-118-camera-ready.pdf
+
+---
+*处理时间: 2026-01-11 21:32:46*

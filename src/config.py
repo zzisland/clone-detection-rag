@@ -12,14 +12,16 @@ class Config:
     CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", "200"))
     
     # 检索配置
-    TOP_K_RETRIEVAL = int(os.getenv("TOP_K_RETRIEVAL", "5"))
+    TOP_K_RETRIEVAL = int(os.getenv("TOP_K_RETRIEVAL", "3"))  # 减少检索数量，避免上下文过长
     
     # 数据目录
     DATA_DIRS = {
         'papers': './data/papers',
         'tools_docs': './data/tools_docs', 
         'project_docs': './data/project_docs',
-        'examples': './data/examples'
+        'examples': './data/examples',
+        'code_datasets': './data/code_datasets',
+        'google_scholar_papers': './data/google_scholar_papers'
     }
     
     # 支持的文件类型

@@ -1,0 +1,115 @@
+SourcererCC克隆检测工具使用指南
+
+SourcererCC是一个基于代码片段的快速克隆检测工具，专为大规模代码库设计。
+
+特点：
+- 高速：专为大规模代码库优化
+- 准确：支持多种克隆类型检测
+- 多语言：支持20+种编程语言
+- 可扩展：支持自定义语言配置
+
+安装要求：
+- Java 8或更高版本
+- 至少4GB内存
+- 足够的磁盘空间
+
+基本语法：
+sourcerercc [选项] 源代码目录
+
+主要选项：
+- --language：指定编程语言
+- --threshold：设置相似度阈值
+- --output：指定输出文件
+- --format：输出格式（json/xml/csv）
+- --min-tokens：最小token数量
+- --max-gap：最大允许间隔
+
+语言支持：
+- java：Java语言
+- c：C语言
+- cpp：C++语言
+- csharp：C#语言
+- python：Python语言
+- javascript：JavaScript语言
+- php：PHP语言
+- ruby：Ruby语言
+- go：Go语言
+- swift：Swift语言
+
+使用示例：
+1. 检测Java代码克隆：
+sourcerercc --language java --threshold 0.8 --output result.json src/
+
+2. 高精度检测：
+sourcerercc --language java --threshold 0.9 --min-tokens 10 src/
+
+3. 大规模项目检测：
+sourcerercc --language java --threshold 0.7 --max-gap 5 --output result.csv src/
+
+克隆类型支持：
+- Type-1：精确克隆（阈值0.9-1.0）
+- Type-2：参数化克隆（阈值0.8-0.9）
+- Type-3：语法克隆（阈值0.6-0.8）
+- Type-4：语义克隆（阈值0.4-0.6）
+
+参数配置：
+- --min-tokens：最小token数量（建议6-10）
+- --max-gap：最大token间隔（建议3-5）
+- --threads：线程数量（根据CPU核心数设置）
+- --batch-size：批处理大小（建议1000-5000）
+
+性能优化：
+1. 合理设置线程数量
+2. 使用SSD存储
+3. 增加JVM内存
+4. 排除不必要的文件
+
+输出格式：
+JSON格式包含：
+- 克隆对ID
+- 相似度分数
+- 起始位置
+- 克隆长度
+- 文件路径
+
+XML格式包含：
+- 克隆检测结果
+- 统计信息
+- 配置参数
+- 执行时间
+
+CSV格式包含：
+- 文件1路径
+- 文件2路径
+- 起始行1
+- 起始行2
+- 相似度
+- 克隆长度
+
+限制：
+- 主要基于token序列，语义分析有限
+- 对非常小的代码片段检测效果不佳
+- 需要较多内存处理大型项目
+
+适用场景：
+1. 工业应用：大规模代码库分析
+2. 开源项目：许可证合规检查
+3. 代码审查：重复代码发现
+4. 学术研究：克隆检测基准测试
+
+与其他工具比较：
+- vs CCFinder：速度快得多，但精度略低
+- vs NiCad：更适合大规模项目，但配置选项较少
+- vs Deckard：性能更好，但学术功能较少
+
+高级功能：
+1. 分布式处理
+2. 增量检测
+3. 可视化界面
+4. API接口
+
+最佳实践：
+1. 根据项目规模调整参数
+2. 使用多线程提高性能
+3. 定期清理临时文件
+4. 结合其他工具进行验证

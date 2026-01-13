@@ -1,0 +1,15 @@
+# Copyright 2002 IEEE.
+
+**作者**: Source Code, Service Center, Hoes Lane, O. Box
+**年份**: 2023
+**会议**: ase [Duc99]points out that “ making a code fragment is simpler and
+**关键词**: clone, cloning, duplication, similarity, detection, similarity, plagiarism, reuse, copy, duplicate
+
+## 摘要
+This paper describes the results of a process wherebythe detection capability of 5 code replication detectiontools for large software application are evaluated.Specifically this work focuses on the benefits ofidentification for preventative maintenance that is withthe aim to remove some of the identified clones fromthe source code. A number of requirements aretherefore identified upon which the tools are evaluated.The results of the analysis processes show that eachtool has its own strengths and weaknesses and nosingle tool is able to identifyall clones within thecode.The paper proposes that it may be possible to use acombination of tools to perform the analysis processproviding that adequatemeansofefficientlyidentifyingfalse matches is found.
+
+## 链接
+- 论文链接: file://F:\clone-detection-rag\CloneDetection paper\Bailey02.pdf
+
+---
+*处理时间: 2026-01-11 21:32:46*
