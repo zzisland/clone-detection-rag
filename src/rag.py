@@ -324,8 +324,52 @@ class CloneDetectionRAG:
             "confidence": "high" if len(docs) >= 3 else "medium"
         }
     
+    def is_uncertain_question(self, question: str) -> bool:
+        """检测是否为不确定或超出领域范围的问题"""
+        
+        # 明确的非领域关键词
+        out_of_domain_keywords = [
+            "天气", "股票", "彩票", "明天", "今天的新闻",
+            "做菜", "烹饪", "旅游", "购物", "电影", "音乐",
+            "体育", "足球", "篮球", "游戏", "娱乐"
+        ]
+        
+        # 检查是否包含明确的非领域关键词
+        question_lower = question.lower()
+        if any(kw in question_lower for kw in out_of_domain_keywords):
+            return True
+        
+        # 代码克隆检测领域关键词
+        domain_keywords = [
+            "代码", "克隆", "检测", "工具", "算法", "相似",
+            "type", "ast", "token", "pdg", "nicad", "ccfinder",
+            "复制", "重复", "软件", "程序", "函数", "变量"
+        ]
+        
+        # 如果问题中没有任何领域关键词，可能超出范围
+        has_domain_keyword = any(kw in question_lower for kw in domain_keywords)
+        
+        # 如果问题很短且没有领域关键词，可能不确定
+        if len(question) < 10 and not has_domain_keyword:
+            return True
+        
+        return False
+    
     def get_chat_response(self, message: str, history: List[Dict[str, str]] = None) -> Dict[str, Any]:
         """聊天接口"""
+        
+        # 首先检查是否为不确定问题
+        if self.is_uncertain_question(message):
+            return {
+                "answer": "抱歉，这个问题超出了代码克隆检测的专业领域范围。我专注于回答与代码克隆检测相关的问题，包括：\n\n"
+                         "- 代码克隆的概念和类型\n"
+                         "- 克隆检测工具和方法\n"
+                         "- 代码相似度分析\n"
+                         "- 检测算法原理\n\n"
+                         "请提问与代码克隆检测相关的问题。",
+                "sources": [],
+                "confidence": "low"
+            }
         
         # 分析消息类型
         message_lower = message.lower()
